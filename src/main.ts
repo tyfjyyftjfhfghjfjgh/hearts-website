@@ -24,7 +24,7 @@ const headerTemplate = `
       <ul class="nav-menu">
         <li class="nav-item" data-page="maria">Maria HUIZAR</li>
         <li class="nav-item dropdown">
-          <span class="dropdown-trigger">Séances et formations</span>
+          <span class="dropdown-trigger">Séances</span>
           <div class="dropdown-content">
             <a href="#" data-page="voir-clair">Voir clair en soi</a>
             <a href="#" data-page="memoires-akashiques">Lectures Akashiques</a>
@@ -33,11 +33,11 @@ const headerTemplate = `
           </div>
         </li>
         <li class="nav-item dropdown">
-          <span class="dropdown-trigger">Tarifs</span>
+          <span class="dropdown-trigger">Formations</span>
           <div class="dropdown-content">
             <a href="#" data-page="tarifs">Toutes les formations</a>
             <a href="#" data-page="reiki-usui">Reiki Usui</a>
-            <a href="#" data-page="memoires-akashiques-formations">Mémoires Akashiques</a>
+            <a href="#" data-page="memoires-akashiques-formations">Annales Akashiques</a>
             <a href="#" data-page="canalisation">Canalisation</a>
           </div>
         </li>
@@ -1163,18 +1163,18 @@ const reserverPageTemplate = `
           <p class="booking-duration">1 h 15</p>
         </div>
         <p class="booking-description">Un temps pour éclairer ce qui se joue et retrouver une lecture plus juste de votre situation.</p>
-        ${brevoBookingButton('Choisir mon créneau et payer', 'voirClair')}
+        ${brevoBookingButton('Choisir mon créneau', 'voirClair')}
       </article>
 
       <article class="booking-card booking-card-featured">
         <span class="booking-format">EN VISIOCONFÉRENCE</span>
-        <h2>Lecture des mémoires akashiques</h2>
+        <h2>Lecture des annales akashiques</h2>
         <div class="booking-details">
           <p class="booking-price">80 € <span>TTC</span></p>
           <p class="booking-duration">1 h 15</p>
         </div>
         <p class="booking-description">Une lecture pour poser un autre regard sur ce qui demande à être compris avec plus de clarté.</p>
-        ${brevoBookingButton('Choisir mon créneau et payer', 'akashiques')}
+        ${brevoBookingButton('Choisir mon créneau', 'akashiques')}
       </article>
 
       <article class="booking-card">
@@ -1186,6 +1186,17 @@ const reserverPageTemplate = `
         </div>
         <p class="booking-description">Une séance énergétique réalisée dans un cadre attentif, respectueux de votre rythme.</p>
         <a class="booking-button booking-button-secondary" href="mailto:heart.resonance.mariahuizar@gmail.com?subject=Demande%20de%20r%C3%A9servation%20%E2%80%93%20S%C3%A9ance%20de%20Reiki">Demander un rendez-vous</a>
+      </article>
+
+      <article class="booking-card">
+        <span class="booking-format">SUR RENDEZ-VOUS</span>
+        <h2>Séance de reprogrammation des mémoires cellulaires</h2>
+        <div class="booking-details">
+          <p class="booking-price">80 € <span>TTC</span></p>
+          <p class="booking-duration">1 h 15</p>
+        </div>
+        <p class="booking-description">Un travail énergétique et conscient pour libérer certaines empreintes inscrites dans le corps.</p>
+        <a class="booking-button booking-button-secondary" href="mailto:heart.resonance.mariahuizar@gmail.com?subject=Demande%20de%20r%C3%A9servation%20%E2%80%93%20S%C3%A9ance%20de%20reprogrammation%20des%20m%C3%A9moires%20cellulaires">Demander un rendez-vous</a>
       </article>
     </section>
 
