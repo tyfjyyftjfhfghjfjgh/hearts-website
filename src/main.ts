@@ -1,4 +1,5 @@
 import './style.css'
+import routes from './routes.json'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
@@ -13,7 +14,7 @@ declare global {
 const headerTemplate = `
   <header class="header">
     <div class="logo-container" data-page="home">
-      <img src="./1-removebg-preview.png" alt="Heart Resonance Logo" class="logo-image" style="height: 8rem;" />
+      <img src="/1-removebg-preview.png" alt="Heart Resonance Logo" class="logo-image" style="height: 8rem;" />
     </div>
     <button class="mobile-menu-btn">
       <span></span>
@@ -170,7 +171,7 @@ const mariaPageTemplate = `
 
     <section class="maria-hero">
       <div class="maria-image-wrapper">
-        <img src="./HUIZAR-Maria.png" alt="Maria HUIZAR" class="maria-image" />
+        <img src="/HUIZAR-Maria.png" alt="Maria HUIZAR" class="maria-image" />
       </div>
       <div class="maria-intro">
         <h2>Maria HUIZAR</h2>
@@ -1392,7 +1393,7 @@ const cgvPageTemplate = `
       <h2>Heart Resonance – Maria</h2>
       
       <div class="cgv-download">
-        <a href="./CGV_Heart_Resonance_Maria_MAJ 18-03-25.pdf" download class="download-btn">
+        <a href="/CGV_Heart_Resonance_Maria_MAJ 18-03-25.pdf" download class="download-btn">
           <span class="download-icon">📄</span>
           Télécharger les CGV en PDF
         </a>
@@ -1640,9 +1641,18 @@ const privacyPageTemplate = `
   ${footerTemplate}
 `
 
-type Page = 'home' | 'maria' | 'seances' | 'voir-clair' | 'memoires-akashiques' | 'reiki' | 'reprogrammation' | 'tarifs' | 'reiki-usui' | 'memoires-akashiques-formations' | 'canalisation' | 'ateliers' | 'atelier-1' | 'atelier-2' | 'livres' | 'livre-1' | 'livre-2' | 'podcast' | 'reserver' | 'cgv' | 'privacy' | 'mentions' | 'positionnement'
+type Page = 'home' | 'maria' | 'voir-clair' | 'memoires-akashiques' | 'reiki' | 'reprogrammation' | 'tarifs' | 'reiki-usui' | 'memoires-akashiques-formations' | 'canalisation' | 'ateliers' | 'atelier-1' | 'atelier-2' | 'livres' | 'livre-1' | 'livre-2' | 'podcast' | 'reserver' | 'cgv' | 'privacy' | 'mentions' | 'positionnement'
 
-function render(page: Page) {
+function pageFromPath(): Page {
+  const slug = window.location.pathname.replace(/^\/+|\/+$/g, '')
+  return routes.includes(slug) ? slug as Page : 'home'
+}
+
+function render(page: Page, updateHistory = true) {
+  if (updateHistory) {
+    const path = page === 'home' ? '/' : `/${page}/`
+    if (window.location.pathname !== path) window.history.pushState(null, '', path)
+  }
   // reset animation
   app.classList.remove('page-fade')
   // force reflow to restart animation each time
@@ -1702,6 +1712,13 @@ function render(page: Page) {
 }
 
 function attachNavigation() {
+  document.querySelectorAll<HTMLAnchorElement>('a[data-page]').forEach(link => {
+    const page = link.dataset.page
+    if (page === 'home' || routes.includes(page ?? '')) {
+      link.href = page === 'home' ? '/' : `/${page}/`
+    }
+  })
+
   const logo = document.querySelector<HTMLElement>('.logo-container[data-page="home"]')
   logo?.addEventListener('click', (event) => {
     event.preventDefault()
@@ -1718,12 +1735,6 @@ function attachNavigation() {
   backHomeButton?.addEventListener('click', (event) => {
     event.preventDefault()
     render('home')
-  })
-
-  const seancesItem = document.querySelector<HTMLElement>('.nav-item[data-page="seances"]')
-  seancesItem?.addEventListener('click', (event) => {
-    event.preventDefault()
-    render('seances')
   })
 
   const podcastItem = document.querySelector<HTMLElement>('.nav-item[data-page="podcast"]')
@@ -1888,6 +1899,7 @@ function attachNavigation() {
   const dropdownItems = document.querySelectorAll<HTMLElement>('.dropdown-content a')
   dropdownItems.forEach(item => {
     item.addEventListener('click', (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
       event.preventDefault()
       event.stopPropagation()
       const targetPage = item.getAttribute('data-page')
@@ -1926,6 +1938,7 @@ function attachNavigation() {
   const footerLinks = document.querySelectorAll<HTMLElement>('.footer-link[data-page]')
   footerLinks.forEach(link => {
     link.addEventListener('click', (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
       event.preventDefault()
       const targetPage = link.getAttribute('data-page')
       if (targetPage) {
@@ -1935,4 +1948,5 @@ function attachNavigation() {
   })
 }
 
-render('home')
+window.addEventListener('popstate', () => render(pageFromPath(), false))
+render(pageFromPath(), false)

@@ -1,7 +1,7 @@
-(function(){const u=document.createElement("link").relList;if(u&&u.supports&&u.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))m(r);new MutationObserver(r=>{for(const o of r)if(o.type==="childList")for(const b of o.addedNodes)b.tagName==="LINK"&&b.rel==="modulepreload"&&m(b)}).observe(document,{childList:!0,subtree:!0});function f(r){const o={};return r.integrity&&(o.integrity=r.integrity),r.referrerPolicy&&(o.referrerPolicy=r.referrerPolicy),r.crossOrigin==="use-credentials"?o.credentials="include":r.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function m(r){if(r.ep)return;r.ep=!0;const o=f(r);fetch(r.href,o)}})();const i=document.querySelector("#app"),a=`
+(function(){const u=document.createElement("link").relList;if(u&&u.supports&&u.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))v(r);new MutationObserver(r=>{for(const o of r)if(o.type==="childList")for(const b of o.addedNodes)b.tagName==="LINK"&&b.rel==="modulepreload"&&v(b)}).observe(document,{childList:!0,subtree:!0});function d(r){const o={};return r.integrity&&(o.integrity=r.integrity),r.referrerPolicy&&(o.referrerPolicy=r.referrerPolicy),r.crossOrigin==="use-credentials"?o.credentials="include":r.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function v(r){if(r.ep)return;r.ep=!0;const o=d(r);fetch(r.href,o)}})();const R=["maria","voir-clair","memoires-akashiques","reiki","reprogrammation","tarifs","reiki-usui","memoires-akashiques-formations","canalisation","ateliers","atelier-1","atelier-2","livres","livre-1","livre-2","podcast","reserver","cgv","privacy","mentions","positionnement"],a=document.querySelector("#app"),n=`
   <header class="header">
     <div class="logo-container" data-page="home">
-      <img src="./1-removebg-preview.png" alt="Heart Resonance Logo" class="logo-image" style="height: 8rem;" />
+      <img src="/1-removebg-preview.png" alt="Heart Resonance Logo" class="logo-image" style="height: 8rem;" />
     </div>
     <button class="mobile-menu-btn">
       <span></span>
@@ -12,7 +12,7 @@
       <ul class="nav-menu">
         <li class="nav-item" data-page="maria">Maria HUIZAR</li>
         <li class="nav-item dropdown">
-          <span class="dropdown-trigger">Séances et formations</span>
+          <span class="dropdown-trigger">Séances</span>
           <div class="dropdown-content">
             <a href="#" data-page="voir-clair">Voir clair en soi</a>
             <a href="#" data-page="memoires-akashiques">Lectures Akashiques</a>
@@ -21,22 +21,22 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <span class="dropdown-trigger">Tarifs</span>
+          <span class="dropdown-trigger">Formations</span>
           <div class="dropdown-content">
             <a href="#" data-page="tarifs">Toutes les formations</a>
             <a href="#" data-page="reiki-usui">Reiki Usui</a>
-            <a href="#" data-page="memoires-akashiques-formations">Mémoires Akashiques</a>
+            <a href="#" data-page="memoires-akashiques-formations">Annales Akashiques</a>
             <a href="#" data-page="canalisation">Canalisation</a>
           </div>
         </li>
         <li class="nav-item" data-page="positionnement">Positionnement</li>
         <li class="nav-item" data-page="podcast">Podcast</li>
-        <li class="nav-item nav-booking" data-page="reserver">RÉSERVER</li>
+        <li class="nav-item nav-booking" data-page="reserver">Réserver une séance</li>
       </ul>
     </nav>
     <div class="mobile-menu-overlay"></div>
   </header>
-`,n=`
+`,t=`
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-brand">
@@ -91,8 +91,8 @@
       </div>
     </div>
   </footer>
-`,I=`
-  ${a}
+`,C=`
+  ${n}
 
   <div class="banner">
     <div class="banner-overlay"></div>
@@ -141,9 +141,9 @@
     </section>
   </section>
 
+  ${t}
+`,y=`
   ${n}
-`,A=`
-  ${a}
 
   <main class="maria-page">
     <div class="maria-back">
@@ -152,7 +152,7 @@
 
     <section class="maria-hero">
       <div class="maria-image-wrapper">
-        <img src="./HUIZAR-Maria.png" alt="Maria HUIZAR" class="maria-image" />
+        <img src="/HUIZAR-Maria.png" alt="Maria HUIZAR" class="maria-image" />
       </div>
       <div class="maria-intro">
         <h2>Maria HUIZAR</h2>
@@ -222,8 +222,8 @@
     </section>
   </main>
 
-  ${n}
-`,C=`
+  ${t}
+`,N=`
     <section class="tarifs-seances">
       <div class="tarifs-seances-content">
         <h2>Tarifs séances</h2>
@@ -251,7 +251,7 @@
         </div>
       </div>
     </section>
-`;function E(s,u="80 €",f="1 h 15",m,r){const o=m&&r?`<button class="seance-booking-button" type="button" data-brevo-meeting="${r}">${m}</button>`:"";return`
+`;function E(s,u="80 €",d="1 h 15",v,r){const o=v&&r?`<button class="seance-booking-button" type="button" data-brevo-meeting="${r}">${v}</button>`:"";return`
     <section class="tarifs-seances">
       <div class="tarifs-seances-content">
         <h2>TARIF DE LA SÉANCE</h2>
@@ -259,14 +259,14 @@
           <div class="seance-tarif">
             <h3>${s}</h3>
             <p class="tarif-price">${u}</p>
-            <p class="tarif-duration">${f}</p>
+            <p class="tarif-duration">${d}</p>
             ${o}
           </div>
         </div>
       </div>
     </section>
-  `}const y=`
-  ${a}
+  `}const M=`
+  ${n}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -317,9 +317,9 @@
     ${E("Séance Voir clair en soi","80 € TTC","1 h 15","RÉSERVER MA SÉANCE","voir-clair")}
   </main>
 
+  ${t}
+`,O=`
   ${n}
-`,N=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -362,9 +362,9 @@
     ${E("Lecture Akashique","80 € TTC","1 h 15","RÉSERVER MA LECTURE","akashiques")}
   </main>
 
+  ${t}
+`,w=`
   ${n}
-`,M=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -439,9 +439,9 @@
     ${E("Séance de Reiki")}
   </main>
 
+  ${t}
+`,D=`
   ${n}
-`,O=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -501,9 +501,9 @@
     ${E("Reprogrammation des mémoires cellulaires")}
   </main>
 
-  ${n}
+  ${t}
 `,x=`
-  ${a}
+  ${n}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -592,9 +592,9 @@
     </section>
   </main>
 
+  ${t}
+`,P=`
   ${n}
-`,D=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -680,9 +680,9 @@
     </section>
   </main>
 
+  ${t}
+`,U=`
   ${n}
-`,w=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -726,9 +726,9 @@
     </section>
   </main>
 
+  ${t}
+`,$=`
   ${n}
-`,P=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -754,9 +754,9 @@
     </section>
   </main>
 
+  ${t}
+`,j=`
   ${n}
-`,U=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -777,9 +777,9 @@
     </section>
   </main>
 
+  ${t}
+`,H=`
   ${n}
-`,j=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -800,9 +800,9 @@
     </section>
   </main>
 
+  ${t}
+`,z=`
   ${n}
-`,H=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -828,9 +828,9 @@
     </section>
   </main>
 
+  ${t}
+`,V=`
   ${n}
-`,$=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -851,9 +851,9 @@
     </section>
   </main>
 
+  ${t}
+`,B=`
   ${n}
-`,z=`
-  ${a}
 
   <main class="seances-page">
     <div class="seances-back">
@@ -874,9 +874,9 @@
     </section>
   </main>
 
+  ${t}
+`,F=`
   ${n}
-`,V=`
-  ${a}
 
   <main class="tarifs-page">
     <div class="tarifs-back">
@@ -1062,12 +1062,12 @@
       </div>
     </section>
 
-    ${C}
+    ${N}
   </main>
 
+  ${t}
+`,G={voirClair:"https://meet.brevo.com/heart-resonance-mariahuizar/borderless?l=seance-voir-clair",akashiques:"https://meet.brevo.com/heart-resonance-mariahuizar/borderless?l=lecture-akashique-en-visioconference"};function L(s,u){return`<button class="booking-button" type="button" data-brevo-meeting="${u}">${s}</button>`}const J=`
   ${n}
-`,B={voirClair:"https://meet.brevo.com/heart-resonance-mariahuizar/borderless?l=seance-voir-clair",akashiques:"https://meet.brevo.com/heart-resonance-mariahuizar/borderless?l=lecture-akashique-en-visioconference"};function L(s,u){return`<button class="booking-button" type="button" data-brevo-meeting="${u}">${s}</button>`}const F=`
-  ${a}
 
   <main class="booking-page">
     <div class="booking-back">
@@ -1089,18 +1089,18 @@
           <p class="booking-duration">1 h 15</p>
         </div>
         <p class="booking-description">Un temps pour éclairer ce qui se joue et retrouver une lecture plus juste de votre situation.</p>
-        ${L("Choisir mon créneau et payer","voirClair")}
+        ${L("Choisir mon créneau","voirClair")}
       </article>
 
       <article class="booking-card booking-card-featured">
         <span class="booking-format">EN VISIOCONFÉRENCE</span>
-        <h2>Lecture des mémoires akashiques</h2>
+        <h2>Lecture des annales akashiques</h2>
         <div class="booking-details">
           <p class="booking-price">80 € <span>TTC</span></p>
           <p class="booking-duration">1 h 15</p>
         </div>
         <p class="booking-description">Une lecture pour poser un autre regard sur ce qui demande à être compris avec plus de clarté.</p>
-        ${L("Choisir mon créneau et payer","akashiques")}
+        ${L("Choisir mon créneau","akashiques")}
       </article>
 
       <article class="booking-card">
@@ -1113,14 +1113,25 @@
         <p class="booking-description">Une séance énergétique réalisée dans un cadre attentif, respectueux de votre rythme.</p>
         <a class="booking-button booking-button-secondary" href="mailto:heart.resonance.mariahuizar@gmail.com?subject=Demande%20de%20r%C3%A9servation%20%E2%80%93%20S%C3%A9ance%20de%20Reiki">Demander un rendez-vous</a>
       </article>
+
+      <article class="booking-card">
+        <span class="booking-format">SUR RENDEZ-VOUS</span>
+        <h2>Séance de reprogrammation des mémoires cellulaires</h2>
+        <div class="booking-details">
+          <p class="booking-price">80 € <span>TTC</span></p>
+          <p class="booking-duration">1 h 15</p>
+        </div>
+        <p class="booking-description">Un travail énergétique et conscient pour libérer certaines empreintes inscrites dans le corps.</p>
+        <a class="booking-button booking-button-secondary" href="mailto:heart.resonance.mariahuizar@gmail.com?subject=Demande%20de%20r%C3%A9servation%20%E2%80%93%20S%C3%A9ance%20de%20reprogrammation%20des%20m%C3%A9moires%20cellulaires">Demander un rendez-vous</a>
+      </article>
     </section>
 
     <p class="booking-note">Pour les séances en visioconférence, la réservation et le règlement sont réalisés sur la page sécurisée Brevo.</p>
   </main>
 
+  ${t}
+`,K=`
   ${n}
-`,G=`
-  ${a}
 
   <main class="podcast-page">
     <div class="podcast-back">
@@ -1184,9 +1195,9 @@
     </section>
   </main>
 
+  ${t}
+`,Q=`
   ${n}
-`,J=`
-  ${a}
 
   <main class="mentions-page">
     <div class="mentions-back">
@@ -1238,9 +1249,9 @@
     </section>
   </main>
 
+  ${t}
+`,_=`
   ${n}
-`,Q=`
-  ${a}
 
   <main class="positionnement-page">
     <div class="positionnement-back">
@@ -1276,9 +1287,9 @@
     </section>
   </main>
 
+  ${t}
+`;function k(s){if(!window.BrevoBookingPage){window.alert("Le module de réservation est en cours de chargement. Veuillez réessayer dans un instant.");return}window.BrevoBookingPage.initStaticButton({url:G[s]})}const W=`
   ${n}
-`;function R(s){if(!window.BrevoBookingPage){window.alert("Le module de réservation est en cours de chargement. Veuillez réessayer dans un instant.");return}window.BrevoBookingPage.initStaticButton({url:B[s]})}const _=`
-  ${a}
 
   <main class="cgv-page">
     <div class="cgv-back">
@@ -1290,7 +1301,7 @@
       <h2>Heart Resonance – Maria</h2>
       
       <div class="cgv-download">
-        <a href="./CGV_Heart_Resonance_Maria_MAJ 18-03-25.pdf" download class="download-btn">
+        <a href="/CGV_Heart_Resonance_Maria_MAJ 18-03-25.pdf" download class="download-btn">
           <span class="download-icon">📄</span>
           Télécharger les CGV en PDF
         </a>
@@ -1468,9 +1479,9 @@
     </section>
   </main>
 
+  ${t}
+`,Z=`
   ${n}
-`,W=`
-  ${a}
 
   <main class="privacy-page">
     <div class="privacy-back">
@@ -1533,5 +1544,5 @@
     </section>
   </main>
 
-  ${n}
-`;function l(s){i.classList.remove("page-fade"),i.offsetWidth,s==="home"?i.innerHTML=I:s==="maria"?i.innerHTML=A:s==="voir-clair"?i.innerHTML=y:s==="memoires-akashiques"?i.innerHTML=N:s==="reiki"?i.innerHTML=M:s==="reprogrammation"?i.innerHTML=O:s==="tarifs"?i.innerHTML=V:s==="reiki-usui"?i.innerHTML=x:s==="memoires-akashiques-formations"?i.innerHTML=D:s==="canalisation"?i.innerHTML=w:s==="ateliers"?i.innerHTML=P:s==="atelier-1"?i.innerHTML=U:s==="atelier-2"?i.innerHTML=j:s==="livres"?i.innerHTML=H:s==="livre-1"?i.innerHTML=$:s==="livre-2"?i.innerHTML=z:s==="privacy"?i.innerHTML=W:s==="cgv"?i.innerHTML=_:s==="mentions"?i.innerHTML=J:s==="positionnement"?i.innerHTML=Q:s==="reserver"?i.innerHTML=F:i.innerHTML=G,K(),window.scrollTo({top:0,behavior:"instant"}),i.classList.add("page-fade")}function K(){document.querySelector('.logo-container[data-page="home"]')?.addEventListener("click",e=>{e.preventDefault(),l("home")}),document.querySelector('.nav-item[data-page="maria"]')?.addEventListener("click",e=>{e.preventDefault(),l("maria")}),document.querySelector(".btn-back-home")?.addEventListener("click",e=>{e.preventDefault(),l("home")}),document.querySelector('.nav-item[data-page="seances"]')?.addEventListener("click",e=>{e.preventDefault(),l("seances")}),document.querySelector('.nav-item[data-page="podcast"]')?.addEventListener("click",e=>{e.preventDefault(),l("podcast")}),document.querySelector(".btn-podcast")?.addEventListener("click",e=>{e.preventDefault(),l("podcast")}),document.querySelector('.nav-item[data-page="tarifs"]')?.addEventListener("click",e=>{e.preventDefault(),l("tarifs")}),document.querySelector('.nav-item[data-page="positionnement"]')?.addEventListener("click",e=>{e.preventDefault(),l("positionnement")}),document.querySelector('.nav-item[data-page="reserver"]')?.addEventListener("click",e=>{e.preventDefault(),l("reserver")}),document.querySelectorAll("[data-brevo-meeting]").forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.brevoMeeting;t==="voir-clair"&&R("voirClair"),t==="akashiques"&&R("akashiques")})});const p=document.querySelector(".mobile-menu-btn"),v=document.querySelector(".nav-menu"),d=document.querySelector(".mobile-menu-overlay");function T(){const e=document.createElement("div");e.style.visibility="hidden",e.style.overflow="scroll",document.body.appendChild(e);const t=document.createElement("div");e.appendChild(t);const c=e.offsetWidth-t.offsetWidth;return e.parentNode?.removeChild(e),c}const k=T();document.documentElement.style.setProperty("--scrollbar-width",`${k}px`),p&&v&&d&&(p.addEventListener("click",()=>{p.classList.contains("open")?(p.classList.remove("open"),v.classList.remove("mobile-open"),d.classList.remove("show"),document.body.classList.remove("menu-open")):(p.classList.add("open"),v.classList.add("mobile-open"),d.classList.add("show"),document.body.classList.add("menu-open"))}),d.addEventListener("click",()=>{p.classList.remove("open"),v.classList.remove("mobile-open"),d.classList.remove("show"),document.body.classList.remove("menu-open")})),document.querySelectorAll(".dropdown").forEach(e=>{const t=e.querySelector(".dropdown-content");let c;window.innerWidth>600&&(e.addEventListener("mouseenter",()=>{clearTimeout(c),t?.classList.add("show")}),e.addEventListener("mouseleave",()=>{c=setTimeout(()=>{t?.classList.remove("show")},300)}),t?.addEventListener("mouseenter",()=>{clearTimeout(c)}),t?.addEventListener("mouseleave",()=>{c=setTimeout(()=>{t?.classList.remove("show")},300)}));const h=e.querySelector(".dropdown-trigger");h?.addEventListener("click",q=>{if(window.innerWidth<=600){q.preventDefault(),q.stopPropagation();const S=t?.classList.contains("show");document.querySelectorAll(".dropdown-content").forEach(g=>{g!==t&&g.classList.remove("show")}),document.querySelectorAll(".dropdown-trigger").forEach(g=>{g!==h&&g.classList.remove("open")}),S?(t?.classList.remove("show"),h?.classList.remove("open")):(t?.classList.add("show"),h?.classList.add("open"))}})}),document.querySelectorAll(".dropdown-content a").forEach(e=>{e.addEventListener("click",t=>{t.preventDefault(),t.stopPropagation();const c=e.getAttribute("data-page");c&&(document.querySelectorAll(".dropdown-content").forEach(h=>{h.classList.remove("show")}),window.innerWidth<=600&&(p?.classList.remove("open"),v?.classList.remove("mobile-open"),d?.classList.remove("show"),document.body.classList.remove("menu-open")),l(c))})}),document.querySelectorAll(".nav-item:not(.dropdown)").forEach(e=>{e.addEventListener("click",()=>{window.innerWidth<=600&&(p?.classList.remove("open"),v?.classList.remove("mobile-open"),d?.classList.remove("show"),document.body.classList.remove("menu-open"))})}),document.querySelectorAll(".footer-link[data-page]").forEach(e=>{e.addEventListener("click",t=>{t.preventDefault();const c=e.getAttribute("data-page");c&&l(c)})})}l("home");
+  ${t}
+`;function T(){const s=window.location.pathname.replace(/^\/+|\/+$/g,"");return R.includes(s)?s:"home"}function l(s,u=!0){if(u){const d=s==="home"?"/":`/${s}/`;window.location.pathname!==d&&window.history.pushState(null,"",d)}a.classList.remove("page-fade"),a.offsetWidth,s==="home"?a.innerHTML=C:s==="maria"?a.innerHTML=y:s==="voir-clair"?a.innerHTML=M:s==="memoires-akashiques"?a.innerHTML=O:s==="reiki"?a.innerHTML=w:s==="reprogrammation"?a.innerHTML=D:s==="tarifs"?a.innerHTML=F:s==="reiki-usui"?a.innerHTML=x:s==="memoires-akashiques-formations"?a.innerHTML=P:s==="canalisation"?a.innerHTML=U:s==="ateliers"?a.innerHTML=$:s==="atelier-1"?a.innerHTML=j:s==="atelier-2"?a.innerHTML=H:s==="livres"?a.innerHTML=z:s==="livre-1"?a.innerHTML=V:s==="livre-2"?a.innerHTML=B:s==="privacy"?a.innerHTML=Z:s==="cgv"?a.innerHTML=W:s==="mentions"?a.innerHTML=Q:s==="positionnement"?a.innerHTML=_:s==="reserver"?a.innerHTML=J:a.innerHTML=K,X(),window.scrollTo({top:0,behavior:"instant"}),a.classList.add("page-fade")}function X(){document.querySelectorAll("a[data-page]").forEach(e=>{const i=e.dataset.page;(i==="home"||R.includes(i??""))&&(e.href=i==="home"?"/":`/${i}/`)}),document.querySelector('.logo-container[data-page="home"]')?.addEventListener("click",e=>{e.preventDefault(),l("home")}),document.querySelector('.nav-item[data-page="maria"]')?.addEventListener("click",e=>{e.preventDefault(),l("maria")}),document.querySelector(".btn-back-home")?.addEventListener("click",e=>{e.preventDefault(),l("home")}),document.querySelector('.nav-item[data-page="podcast"]')?.addEventListener("click",e=>{e.preventDefault(),l("podcast")}),document.querySelector(".btn-podcast")?.addEventListener("click",e=>{e.preventDefault(),l("podcast")}),document.querySelector('.nav-item[data-page="tarifs"]')?.addEventListener("click",e=>{e.preventDefault(),l("tarifs")}),document.querySelector('.nav-item[data-page="positionnement"]')?.addEventListener("click",e=>{e.preventDefault(),l("positionnement")}),document.querySelector('.nav-item[data-page="reserver"]')?.addEventListener("click",e=>{e.preventDefault(),l("reserver")}),document.querySelectorAll("[data-brevo-meeting]").forEach(e=>{e.addEventListener("click",()=>{const i=e.dataset.brevoMeeting;(i==="voir-clair"||i==="voirClair")&&k("voirClair"),i==="akashiques"&&k("akashiques")})});const p=document.querySelector(".mobile-menu-btn"),h=document.querySelector(".nav-menu"),m=document.querySelector(".mobile-menu-overlay");function S(){const e=document.createElement("div");e.style.visibility="hidden",e.style.overflow="scroll",document.body.appendChild(e);const i=document.createElement("div");e.appendChild(i);const c=e.offsetWidth-i.offsetWidth;return e.parentNode?.removeChild(e),c}const A=S();document.documentElement.style.setProperty("--scrollbar-width",`${A}px`),p&&h&&m&&(p.addEventListener("click",()=>{p.classList.contains("open")?(p.classList.remove("open"),h.classList.remove("mobile-open"),m.classList.remove("show"),document.body.classList.remove("menu-open")):(p.classList.add("open"),h.classList.add("mobile-open"),m.classList.add("show"),document.body.classList.add("menu-open"))}),m.addEventListener("click",()=>{p.classList.remove("open"),h.classList.remove("mobile-open"),m.classList.remove("show"),document.body.classList.remove("menu-open")})),document.querySelectorAll(".dropdown").forEach(e=>{const i=e.querySelector(".dropdown-content");let c;window.innerWidth>600&&(e.addEventListener("mouseenter",()=>{clearTimeout(c),i?.classList.add("show")}),e.addEventListener("mouseleave",()=>{c=setTimeout(()=>{i?.classList.remove("show")},300)}),i?.addEventListener("mouseenter",()=>{clearTimeout(c)}),i?.addEventListener("mouseleave",()=>{c=setTimeout(()=>{i?.classList.remove("show")},300)}));const g=e.querySelector(".dropdown-trigger");g?.addEventListener("click",q=>{if(window.innerWidth<=600){q.preventDefault(),q.stopPropagation();const I=i?.classList.contains("show");document.querySelectorAll(".dropdown-content").forEach(f=>{f!==i&&f.classList.remove("show")}),document.querySelectorAll(".dropdown-trigger").forEach(f=>{f!==g&&f.classList.remove("open")}),I?(i?.classList.remove("show"),g?.classList.remove("open")):(i?.classList.add("show"),g?.classList.add("open"))}})}),document.querySelectorAll(".dropdown-content a").forEach(e=>{e.addEventListener("click",i=>{if(i.ctrlKey||i.metaKey||i.shiftKey||i.altKey)return;i.preventDefault(),i.stopPropagation();const c=e.getAttribute("data-page");c&&(document.querySelectorAll(".dropdown-content").forEach(g=>{g.classList.remove("show")}),window.innerWidth<=600&&(p?.classList.remove("open"),h?.classList.remove("mobile-open"),m?.classList.remove("show"),document.body.classList.remove("menu-open")),l(c))})}),document.querySelectorAll(".nav-item:not(.dropdown)").forEach(e=>{e.addEventListener("click",()=>{window.innerWidth<=600&&(p?.classList.remove("open"),h?.classList.remove("mobile-open"),m?.classList.remove("show"),document.body.classList.remove("menu-open"))})}),document.querySelectorAll(".footer-link[data-page]").forEach(e=>{e.addEventListener("click",i=>{if(i.ctrlKey||i.metaKey||i.shiftKey||i.altKey)return;i.preventDefault();const c=e.getAttribute("data-page");c&&l(c)})})}window.addEventListener("popstate",()=>l(T(),!1));l(T(),!1);
