@@ -1,7 +1,10 @@
 import './style.css'
 import routes from './routes.json'
+import seo from './seo.json'
+import esTranslations from './es-translations.json'
+import esOverrides from './es-overrides.json'
 
-const app = document.querySelector<HTMLDivElement>('#app')!
+const app = typeof document === 'undefined' ? null : document.querySelector<HTMLDivElement>('#app')
 
 declare global {
   interface Window {
@@ -23,7 +26,7 @@ const headerTemplate = `
     </button>
     <nav>
       <ul class="nav-menu">
-        <li class="nav-item" data-page="maria">Maria HUIZAR</li>
+        <li class="nav-item" data-page="maria"><a href="/maria/">Maria HUIZAR</a></li>
         <li class="nav-item dropdown">
           <span class="dropdown-trigger">Séances</span>
           <div class="dropdown-content">
@@ -42,9 +45,11 @@ const headerTemplate = `
             <a href="#" data-page="canalisation">Canalisation</a>
           </div>
         </li>
-        <li class="nav-item" data-page="positionnement">Positionnement</li>
-        <li class="nav-item" data-page="podcast">Podcast</li>
-        <li class="nav-item nav-booking" data-page="reserver">Réserver une séance</li>
+        <li class="nav-item" data-page="positionnement"><a href="/positionnement/">Positionnement</a></li>
+        <li class="nav-item" data-page="faq"><a href="/faq/">FAQ</a></li>
+        <li class="nav-item" data-page="agenda"><a href="/agenda/">Agenda</a></li>
+        <li class="nav-item" data-page="podcast"><a href="/podcast/">Podcast</a></li>
+        <li class="nav-item nav-booking" data-page="reserver"><a href="/reserver/">Réserver une séance</a></li>
       </ul>
     </nav>
     <div class="mobile-menu-overlay"></div>
@@ -60,6 +65,10 @@ const footerTemplate = `
       </div>
       
       <div class="footer-links">
+        <a href="/ateliers/" class="footer-link">Ateliers</a>
+        <span class="footer-separator">/</span>
+        <a href="/livres/" class="footer-link">Livres</a>
+        <span class="footer-separator">/</span>
         <a href="#" data-page="cgv" class="footer-link">CGV</a>
         <span class="footer-separator">/</span>
         <a href="#" data-page="privacy" class="footer-link">Politique de confidentialité</a>
@@ -115,9 +124,10 @@ const homePageTemplate = `
     <div class="banner-overlay"></div>
     <div class="banner-text">
       <h1>HEART RESONANCE</h1>
-      <p class="subtitle">
-        Un accompagnement pour se reconnecter à soi, écouter ce qui vibre juste et avancer avec plus de clarté et de présence.
-      </p>
+      <p class="subtitle">Coach spirituelle et praticienne en clairvoyance consciente et lectures des annales akashiques.<br />
+        Vous avez regardé votre situation sous tous les angles. Sauf peut-être celui qui se trouve dans votre angle mort.<br />
+        À travers la clairvoyance consciente et les lectures akashiques, je vous propose un autre angle de lecture pour comprendre ce qui se joue aujourd'hui.<br />
+        L'objectif : repartir avec davantage de lucidité et rester libre de vos choix.</p>
       <p class="quote">
         « Il ne s'agit pas de devenir quelqu'un d'autre. Il s'agit de se souvenir de qui vous êtes. »
       </p>
@@ -126,8 +136,11 @@ const homePageTemplate = `
 
   <section class="home-content">
     <div class="home-intro">
-      <p>J'accompagne des personnes qui sentent que quelque chose se joue pour elles, mais qui n'y voient pas toujours clair.</p>
-      <p>Mon travail consiste à mettre de la clarté là où tout est confus, à éclairer une situation précise, et à développer une clairvoyance consciente, pour que les choix puissent se faire avec plus de justesse.</p>
+      <p>Vous savez que quelque chose coince. Mais vous n'arrivez pas à voir où.</p>
+      <p>Une relation. Un choix à faire. Un projet qui n'avance pas. Une situation qui se répète.</p>
+      <p>Vous avez réfléchi, analysé, parfois même beaucoup travaillé sur vous. Et pourtant, quelque chose vous échappe encore.</p>
+      <p>Vous venez avec votre situation et vos questions. Nous explorons ensemble ce qui se joue pour vous permettre de voir autrement.</p>
+      <a class="discover-button" href="/seances/">DÉCOUVRIR MES SÉANCES</a>
     </div>
 
     <div class="home-divider">---</div>
@@ -174,7 +187,7 @@ const mariaPageTemplate = `
         <img src="/HUIZAR-Maria.png" alt="Maria HUIZAR" class="maria-image" />
       </div>
       <div class="maria-intro">
-        <h2>Maria HUIZAR</h2>
+        <h1>Maria HUIZAR</h1>
         <p class="maria-intro-text">
           Quand tout devient confus, ce n'est pas que vous ne voyez pas clair.<br />
           C'est que vous percevez beaucoup de choses en même temps.<br />
@@ -225,7 +238,7 @@ const mariaPageTemplate = `
       <aside class="maria-aside">
         <div class="maria-card">
           <h4>Qui je suis</h4>
-          <p>Praticienne en clairvoyance consciente, lectrice des mémoires akashiques et thérapeute au sens non médical.</p>
+          <p>Coach spirituelle, praticienne en clairvoyance consciente et en lectures des annales akashiques.<br />J'accompagne les personnes qui souhaitent voir clair dans une situation personnelle, relationnelle ou professionnelle afin de faire leurs propres choix en conscience.</p>
         </div>
 
         <div class="maria-card">
@@ -274,6 +287,25 @@ const tarifsSeancesTemplate = `
     </section>
 `
 
+const seancesPageTemplate = `
+  ${headerTemplate}
+  <main class="booking-page">
+    <div class="booking-back"><button class="btn-back-home" data-page="home">← Retour à l'accueil</button></div>
+    <section class="booking-hero">
+      <h1>MES SÉANCES</h1>
+      <p>Choisissez l'accompagnement qui correspond à votre situation.</p>
+    </section>
+    <section class="booking-grid" aria-label="Découvrir les séances">
+      <article class="booking-card"><h2>Voir clair en soi</h2><p class="booking-description">Un autre angle de lecture sur la situation que vous traversez.</p><a class="booking-button" href="/voir-clair/">Découvrir la séance</a></article>
+      <article class="booking-card"><h2>Lecture des annales akashiques</h2><p class="booking-description">Explorer vos questions à travers une pratique de guidance spirituelle.</p><a class="booking-button" href="/memoires-akashiques/">Découvrir la lecture</a></article>
+      <article class="booking-card"><h2>Séance de Reiki</h2><p class="booking-description">Une séance énergétique dans un cadre attentif et respectueux.</p><a class="booking-button" href="/reiki/">Découvrir la séance</a></article>
+      <article class="booking-card"><h2>Reprogrammation des mémoires cellulaires</h2><p class="booking-description">Un travail énergétique et conscient sur les empreintes du corps.</p><a class="booking-button" href="/reprogrammation/">Découvrir la séance</a></article>
+    </section>
+    <p class="booking-note"><a class="discover-button" href="/reserver/">RÉSERVER UNE SÉANCE</a></p>
+  </main>
+  ${footerTemplate}
+`
+
 function createSeanceTarifTemplate(
   title: string,
   price: string = '80 €',
@@ -311,11 +343,16 @@ const voirClairPageTemplate = `
     </div>
 
     <section class="seances-hero">
-      <h1>SÉANCES – VOIR CLAIR EN SOI</h1>
+      <h1>VOIR CLAIR EN SOI — ACCOMPAGNEMENT SPIRITUEL</h1>
       <p class="seances-intro">
-        Les séances sont des temps d'écoute et de lecture intérieure. Elles s'adressent aux
-        personnes qui sentent que quelque chose se joue, sans toujours parvenir à le comprendre
-        clairement.
+        Vous savez que quelque chose coince. Mais vous n'arrivez pas à voir où.<br />
+        Vous avez peut-être déjà analysé votre situation sous tous les angles. Pourtant, quelque chose vous échappe.<br />
+        Une relation, une décision difficile, un projet bloqué, une situation qui se répète.<br />
+        Vous venez avec votre situation et vos questions.<br />
+        À travers la clairvoyance consciente, la canalisation et les lectures akashiques, je vous apporte un autre angle de lecture sur ce que vous traversez.<br />
+        Mon travail n'est pas de décider à votre place ni de vous annoncer votre destinée.<br />
+        Il est de mettre en lumière ce qui se joue aujourd'hui.<br />
+        Vous repartez avec une nouvelle perspective et restez libre de ce que vous en faites.
       </p>
     </section>
 
@@ -366,10 +403,15 @@ const memoiresAkashiquesPageTemplate = `
     </div>
 
     <section class="seances-hero">
-      <h1>MÉMOIRES AKASHIQUES</h1>
+      <h1>LECTURE DES ANNALES AKASHIQUES</h1>
       <p class="seances-intro">
-        Le travail avec les mémoires akashiques permet d'accéder à une autre forme de
-        compréhension, plus intuitive et plus globale.
+        Vous avez des questions sur une relation, un choix, votre travail, l'argent, un projet ou une situation qui se répète ?<br />
+        Les annales akashiques, également appelées mémoires akashiques, sont décrites dans certaines traditions spirituelles comme un champ d'informations lié au parcours de l'âme.<br />
+        Une lecture des annales akashiques est une pratique de guidance spirituelle qui permet d'explorer vos questionnements sous un autre angle.<br />
+        Je ne suis pas là pour vous annoncer votre destinée, vous révéler une mission karmique ou décider de votre avenir.<br />
+        Ce qui m'intéresse, c'est ce que vous vivez aujourd'hui.<br />
+        Vous venez avec votre question. Nous explorons ensemble ce qui se joue et ce qui peut être éclairé.<br />
+        Vous repartez avec une autre compréhension de votre situation et vous restez libre de vos décisions.
       </p>
     </section>
 
@@ -649,7 +691,7 @@ const memoiresAkashiquesFormationsPageTemplate = `
     </div>
 
     <section class="seances-hero">
-      <h1>LECTURES DES MÉMOIRES AKASHIQUES</h1>
+      <h1>FORMATIONS AUX LECTURES DES ANNALES AKASHIQUES</h1>
       <p class="seances-intro">
         Les mémoires akashiques sont un espace de conscience où sont inscrites les expériences, les
         schémas et les dynamiques de l'âme. Y accéder permet de mettre en lumière ce qui est à
@@ -797,10 +839,12 @@ const ateliersPageTemplate = `
       <div class="seance-card">
         <h2>Atelier 1</h2>
         <p>Contenu du premier atelier à détailler...</p>
+        <a href="/atelier-1/">Voir l'atelier</a>
       </div>
       <div class="seance-card">
         <h2>Atelier 2</h2>
         <p>Contenu du deuxième atelier à détailler...</p>
+        <a href="/atelier-2/">Voir l'atelier</a>
       </div>
     </section>
   </main>
@@ -877,10 +921,12 @@ const livresPageTemplate = `
       <div class="seance-card">
         <h2>Livre 1</h2>
         <p>Contenu du premier livre à détailler...</p>
+        <a href="/livre-1/">Voir le livre</a>
       </div>
       <div class="seance-card">
         <h2>Livre 2</h2>
         <p>Contenu du deuxième livre à détailler...</p>
+        <a href="/livre-2/">Voir le livre</a>
       </div>
     </section>
   </main>
@@ -1030,7 +1076,7 @@ const tarifsPageTemplate = `
         </div>
 
         <div class="tarif-card">
-          <h2>LECTURES DES MÉMOIRES AKASHIQUES</h2>
+          <h2>FORMATIONS AUX LECTURES DES ANNALES AKASHIQUES</h2>
           <p>
             Les mémoires akashiques sont un espace de conscience où sont inscrites les expériences, les
             schémas et les dynamiques de l'âme. Y accéder permet de mettre en lumière ce qui est à
@@ -1207,6 +1253,48 @@ const reserverPageTemplate = `
   ${footerTemplate}
 `
 
+const faqPageTemplate = `
+  ${headerTemplate}
+  <main class="info-page">
+    <div class="info-back"><button class="btn-back-home" data-page="home">← Retour à l'accueil</button></div>
+    <header class="info-hero"><h1>QUESTIONS FRÉQUENTES</h1><p>Vous vous posez des questions avant de prendre rendez-vous ? Voici quelques réponses pour mieux comprendre mon accompagnement.</p></header>
+    <section class="info-list">
+      <article><h2>Qu'est-ce qu'une coach spirituelle ?</h2><p>Une coach spirituelle accompagne les personnes qui souhaitent mieux se comprendre, prendre du recul sur leur situation et avancer en accord avec elles-mêmes.</p><p>Chez Heart Resonance Maria, mon approche associe la clairvoyance consciente, la canalisation, les lectures akashiques et l'accompagnement personnel.</p><p>Mon objectif n'est pas de décider à votre place, mais de vous aider à voir clair.</p></article>
+      <article><h2>À quoi sert une séance Voir clair ?</h2><p>Vous avez peut-être déjà beaucoup analysé votre situation, sans parvenir à identifier ce qui coince.</p><p>Une séance Voir clair permet de prendre du recul et d'explorer ce qui vous échappe encore.</p><p>Vous venez avec votre situation et vos questions. Je vous propose un autre angle de lecture pour que vous puissiez envisager vos choix plus lucidement.</p></article>
+      <article><h2>Qu'est-ce qu'une lecture des annales akashiques ?</h2><p>Les annales akashiques, également appelées mémoires akashiques, appartiennent à une tradition spirituelle selon laquelle il existe un champ d'informations lié au parcours de l'âme.</p><p>Une lecture akashique est une pratique de guidance spirituelle qui permet d'explorer des questions personnelles, relationnelles ou professionnelles.</p><p>Mon approche privilégie la compréhension de la situation présente plutôt que la prédiction de l'avenir.</p></article>
+      <article><h2>Quelles questions puis-je poser ?</h2><p>Vous pouvez venir avec une question concernant une relation, un choix, un projet, le travail, l'argent ou une situation qui se répète.</p><p>Par exemple :</p><ul><li>Qu'est-ce qui se joue dans cette relation ?</li><li>Que puis-je comprendre de cette situation qui revient ?</li><li>Qu'est-ce qui me retient dans mon projet ?</li><li>Qu'ai-je besoin de regarder avant de faire ce choix ?</li></ul><p>Vous pouvez également venir sans savoir formuler précisément votre question. Nous prendrons le temps de la clarifier.</p></article>
+      <article><h2>Quelle différence entre Voir clair et une lecture akashique ?</h2><p>La séance Voir clair est un accompagnement centré sur une situation que vous souhaitez comprendre. Elle peut s'appuyer sur la clairvoyance consciente, la canalisation et les annales akashiques.</p><p>La lecture des annales akashiques est consacrée à cette pratique spécifique de guidance spirituelle.</p><p>Dans les deux cas, nous partons de vos questions, sans vous imposer de décision.</p></article>
+      <article><h2>Prédisez-vous l'avenir ?</h2><p>La clairvoyance fait partie de ma pratique, mais j'ai choisi de ne pas centrer mes séances sur la prédiction.</p><p>Je préfère éclairer ce qui se joue ici et maintenant plutôt que de vous annoncer un avenir supposé déjà écrit.</p><p>Vos choix vous appartiennent.</p></article>
+      <article><h2>Puis-je venir même si j'ai déjà travaillé sur moi ?</h2><p>Oui.</p><p>Vous pouvez avoir identifié vos schémas, compris beaucoup de choses et pourtant continuer à rencontrer une difficulté.</p><p>Parfois, ce qui manque n'est pas une nouvelle analyse, mais un autre angle de lecture.</p></article>
+      <article><h2>Puis-je venir avec une situation précise ?</h2><p>Oui.</p><p>Une relation difficile, une décision à prendre, un projet qui n'avance pas ou une situation qui se répète peuvent être abordés pendant une séance.</p><p>Nous explorons votre situation et les possibilités qui se présentent à vous, sans décider à votre place.</p></article>
+      <article><h2>Où se déroulent les consultations ?</h2><p>Je propose des consultations en visioconférence, en français et en espagnol, partout en France et à l'international.</p><p>Je propose également des séances, des ateliers et des rencontres en présentiel à Albi, Castres et dans d'autres villes, selon les dates annoncées.</p></article>
+      <article><h2>Faut-il connaître les méthodes avant de venir ?</h2><p>Non.</p><p>Vous n'avez pas besoin de connaître la méthode ni d'avoir déjà suivi un accompagnement spirituel.</p><p>Vous venez avec votre situation et vos questions.</p></article>
+      <article><h2>Comment réserver ?</h2><p>Choisissez votre prestation sur <a href="/seances/">heart-resonance.com</a>, puis sélectionnez un créneau dans l'agenda de réservation.</p><p>Pour les événements en présentiel, les modalités de réservation sont précisées avec chaque date.</p></article>
+      <article><h2>Ces pratiques remplacent-elles un suivi médical ou psychologique ?</h2><p>Non.</p><p>Les lectures akashiques, la clairvoyance consciente et les pratiques énergétiques s'inscrivent dans une démarche spirituelle ou de bien-être.</p><p>Elles ne remplacent pas un diagnostic, un traitement médical ou un suivi psychologique.</p></article>
+    </section>
+    <p class="info-action"><a class="discover-button" href="/seances/">DÉCOUVRIR MES SÉANCES</a></p>
+  </main>
+  ${footerTemplate}
+`
+
+type AgendaEvent = { city: string; date: string; name: string; venue: string; bookingUrl: string }
+const agendaEvents: AgendaEvent[] = []
+const agendaEventsHtml = agendaEvents.length
+  ? [...agendaEvents].sort((a, b) => a.date.localeCompare(b.date)).map(event => `
+    <article class="agenda-event"><h2>${event.city}</h2><p><time datetime="${event.date}">${new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(new Date(`${event.date}T12:00:00`))}</time></p><p>${event.name}</p><p>${event.venue}</p><a class="discover-button" href="${event.bookingUrl}">RÉSERVER</a></article>`).join('')
+  : `<p>Aucune date annoncée pour le moment.<br />Les consultations en visioconférence restent accessibles en français et en espagnol, partout dans le monde.</p>`
+
+const agendaPageTemplate = `
+  ${headerTemplate}
+  <main class="info-page">
+    <div class="info-back"><button class="btn-back-home" data-page="home">← Retour à l'accueil</button></div>
+    <header class="info-hero"><h1>MES PROCHAINES DATES</h1><p>Retrouvez-moi à Albi, Castres et dans d'autres villes pour des séances individuelles, des lectures des annales akashiques, des ateliers et des rencontres.<br />Consultez les prochaines dates pour venir me rencontrer en présentiel.</p></header>
+    <section class="info-list agenda-list">${agendaEventsHtml}</section>
+    <p class="info-action"><a class="discover-button" href="/reserver/">RÉSERVER UNE SÉANCE EN VISIO</a></p>
+  </main>
+  ${footerTemplate}
+`
+
 const podcastPageTemplate = `
   ${headerTemplate}
 
@@ -1361,9 +1449,13 @@ const positionnementPageTemplate = `
       </div>
 
       <div class="positionnement-section">
-        <p>Les mémoires akashiques, sont le dialogue avec le Soi sont pour moi des supports de lecture et de compréhension, au service de l'évolution individuelle. Ils n'imposent rien, ne tranchent pas, ne décident pas à la place de la personne.</p>
+        <p>Les mémoires akashiques et le dialogue avec le Soi sont pour moi des supports de lecture et de compréhension, au service de l'évolution individuelle. Ils n'imposent rien, ne tranchent pas et ne décident pas à la place de la personne.</p>
         
         <p>Je n'indique pas un chemin à suivre. Je mets en lumière ce qui peut être vu, pour que chacun puisse faire ses propres choix, librement et en responsabilité.</p>
+      </div>
+      <div class="positionnement-section">
+        <p>Vous traversez une situation que vous n'arrivez plus à comprendre clairement ?<br />Venez avec votre situation et vos questions.<br />Nous explorerons ensemble ce qui se joue, sans décision imposée.</p>
+        <a class="discover-button" href="/seances/">DÉCOUVRIR MES SÉANCES</a>
       </div>
     </section>
   </main>
@@ -1373,7 +1465,9 @@ const positionnementPageTemplate = `
 
 function openBrevoMeeting(meeting: keyof typeof brevoMeetingUrls) {
   if (!window.BrevoBookingPage) {
-    window.alert('Le module de réservation est en cours de chargement. Veuillez réessayer dans un instant.')
+    window.alert(languageFromPath() === 'es'
+      ? 'El módulo de reservas se está cargando. Vuelve a intentarlo en un momento.'
+      : 'Le module de réservation est en cours de chargement. Veuillez réessayer dans un instant.')
     return
   }
 
@@ -1635,74 +1729,225 @@ const privacyPageTemplate = `
         <h2>10. ÉVOLUTION</h2>
         <p>Politique modifiable à tout moment.</p>
       </div>
+      ${import.meta.env.VITE_ENABLE_ES === 'true' ? `
+      <div class="privacy-section">
+        <h2>11. CHOIX DE LA LANGUE</h2>
+        <p>Le site lit la langue préférée indiquée par votre navigateur pour afficher la version française ou espagnole.</p>
+        <p>Si vous choisissez FR ou ES, seule la langue choisie et sa date d'expiration sont enregistrées localement dans votre navigateur pendant 180 jours. Cette préférence sert uniquement à retrouver la langue choisie lors de vos prochaines visites.</p>
+        <p>Vous pouvez changer de langue à tout moment avec FR | ES ou effacer cette préférence dans les paramètres de votre navigateur.</p>
+      </div>` : ''}
     </section>
   </main>
 
   ${footerTemplate}
 `
 
-type Page = 'home' | 'maria' | 'voir-clair' | 'memoires-akashiques' | 'reiki' | 'reprogrammation' | 'tarifs' | 'reiki-usui' | 'memoires-akashiques-formations' | 'canalisation' | 'ateliers' | 'atelier-1' | 'atelier-2' | 'livres' | 'livre-1' | 'livre-2' | 'podcast' | 'reserver' | 'cgv' | 'privacy' | 'mentions' | 'positionnement'
+export type Page = 'home' | 'maria' | 'seances' | 'voir-clair' | 'memoires-akashiques' | 'reiki' | 'reprogrammation' | 'tarifs' | 'reiki-usui' | 'memoires-akashiques-formations' | 'canalisation' | 'ateliers' | 'atelier-1' | 'atelier-2' | 'livres' | 'livre-1' | 'livre-2' | 'podcast' | 'reserver' | 'cgv' | 'privacy' | 'mentions' | 'positionnement' | 'faq' | 'agenda'
+
+function buildFaqAccordion(): string {
+  let itemNumber = 0
+  const groups: Record<number, string> = {
+    0: 'Comprendre l’accompagnement',
+    3: 'Choisir sa séance',
+    8: 'Informations pratiques',
+  }
+
+  return faqPageTemplate
+    .replace('class="info-page"', 'class="info-page faq-page"')
+    .replace('<header class="info-hero">', '<header class="info-hero faq-hero"><p class="faq-eyebrow">À VOTRE ÉCOUTE</p>')
+    .replace('<section class="info-list">', '<section class="faq-list" aria-label="Questions fréquentes">')
+    .replace(/<article><h2>(.*?)<\/h2>/g, (_match, question: string) => {
+      const group = groups[itemNumber]
+      const heading = group ? `<h2 class="faq-group-title">${group}</h2>` : ''
+      itemNumber += 1
+      return `${heading}<details class="faq-item"${itemNumber === 1 ? ' open' : ''}><summary><span class="faq-number" aria-hidden="true">${String(itemNumber).padStart(2, '0')}</span><span class="faq-question">${question}</span><span class="faq-indicator" aria-hidden="true"></span></summary><div class="faq-answer">`
+    })
+    .replace(/<\/article>/g, '</div></details>')
+}
 
 function pageFromPath(): Page {
-  const slug = window.location.pathname.replace(/^\/+|\/+$/g, '')
+  const slug = window.location.pathname.replace(/^\/+|\/+$/g, '').replace(/^es\/?/, '')
   return routes.includes(slug) ? slug as Page : 'home'
 }
 
+type Language = 'fr' | 'es'
+const languagePreferenceKey = 'heart-resonance-language'
+const languagePreferenceDurationMs = 180 * 24 * 60 * 60 * 1000
+function languageFromPath(): Language { return window.location.pathname === '/es' || window.location.pathname.startsWith('/es/') ? 'es' : 'fr' }
+export function pathFor(page: Page, language: Language): string {
+  const suffix = page === 'home' ? '' : `${page}/`
+  return language === 'es' ? `/es/${suffix}` : `/${suffix}`
+}
+
+export function preferredBrowserLanguage(languages: readonly string[]): Language {
+  for (const language of languages) {
+    const primary = language.toLowerCase().split('-')[0]
+    if (primary === 'fr' || primary === 'es') return primary
+  }
+  return 'fr'
+}
+
+export function selectedLanguage(saved: Language | null, languages: readonly string[]): Language {
+  return saved ?? preferredBrowserLanguage(languages)
+}
+
+export function readLanguagePreference(saved: string | null, now: number): Language | null {
+  if (!saved) return null
+  try {
+    const preference: unknown = JSON.parse(saved)
+    if (typeof preference !== 'object' || preference === null || !('language' in preference) || !('expires' in preference)) return null
+    const { language, expires } = preference
+    if (typeof expires !== 'number' || expires <= now) return null
+    return language === 'fr' || language === 'es' ? language : null
+  } catch {
+    return null
+  }
+}
+
+function manualLanguagePreference(): Language | null {
+  try {
+    const saved = window.localStorage.getItem(languagePreferenceKey)
+    const language = readLanguagePreference(saved, Date.now())
+    if (saved && !language) window.localStorage.removeItem(languagePreferenceKey)
+    return language
+  } catch {
+    return null
+  }
+}
+
+function applyAutomaticLanguage(): boolean {
+  if (import.meta.env.VITE_ENABLE_ES !== 'true' || languageFromPath() === 'es') return false
+  const browserLanguages = navigator.languages?.length ? navigator.languages : [navigator.language]
+  const preferred = selectedLanguage(manualLanguagePreference(), browserLanguages)
+  if (preferred !== 'es') return false
+  window.location.replace(pathFor(pageFromPath(), 'es') + window.location.search + window.location.hash)
+  return true
+}
+
+const normalizeText = (text: string) => text.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&#39;', "'").replaceAll('&nbsp;', ' ').replace(/\s+/g, ' ').trim()
+const escapeText = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+const spanishText: Record<string, string> = Object.fromEntries(
+  Object.entries({ ...esTranslations, ...esOverrides }).map(([source, draft]) => [source, draft
+    .replace(/Resonancia del Corazón|resonancia cardíaca/gi, 'Heart Resonance')
+    .replace(/\bEntrenamiento\b/g, 'Formación')
+    .replace(/\bentrenamiento\b/g, 'formación')
+    .replace(/\benérgica\b/g, 'energética')
+  ]),
+)
+
+export function getLocalizedPageHtml(page: Page, language: Language): string {
+  let html = getPageHtml(page)
+  if (language === 'es') {
+    html = html.replace(/>([^<>]+)</g, (match, text: string) => {
+      const translated = spanishText[normalizeText(text)]
+      if (!translated) return match
+      const leading = text.match(/^\s*/)?.[0] ?? ''
+      const trailing = text.match(/\s*$/)?.[0] ?? ''
+      return `>${leading}${escapeText(translated)}${trailing}<`
+    })
+    html = html.replace(/\b(alt|aria-label|title)="([^"]+)"/g, (match, attribute: string, text: string) => {
+      const translated = spanishText[normalizeText(text)]
+      return translated ? `${attribute}="${escapeText(translated).replaceAll('"', '&quot;')}"` : match
+    })
+    if (page === 'home') {
+      html = html.replace(/<div class="banner-text">[\s\S]*?<\/div>/, `<div class="banner-text"><h1>HEART RESONANCE</h1><h2 class="banner-service-title">Coaching espiritual y lectura de registros akáshicos</h2><p class="subtitle">Has analizado tu situación desde todos los ángulos. O tal vez no desde ese que todavía no logras ver.<br />Una relación. Una decisión que tomar. Un proyecto que no avanza. Una situación que se repite.<br />Soy Maria, fundadora de Heart Resonance.<br />A través de la clarividencia consciente y la lectura de registros akáshicos, te ofrezco otra perspectiva para comprender lo que estás viviendo.<br />No estoy aquí para decirte cuál es tu destino ni para tomar decisiones por ti.<br />Vienes con tu situación y tus preguntas. Exploramos lo que está sucediendo y tú decides qué hacer con lo que comprendes.<br />Consultas por videollamada en español y francés, desde cualquier país.</p><a class="discover-button" href="/seances/">CONOCER MIS SESIONES</a></div>`)
+    }
+    html = html.replace('subject=Demande%20de%20r%C3%A9servation%20%E2%80%93%20S%C3%A9ance%20de%20Reiki', `subject=${encodeURIComponent('Solicitud de reserva – Sesión de Reiki')}`)
+    html = html.replace('subject=Demande%20de%20r%C3%A9servation%20%E2%80%93%20S%C3%A9ance%20de%20reprogrammation%20des%20m%C3%A9moires%20cellulaires', `subject=${encodeURIComponent('Solicitud de reserva – Reprogramación de memorias celulares')}`)
+  }
+  html = html.replace(/href="#" data-page="([^"]+)"/g, (_match, route: string) => `href="${pathFor(route as Page, language)}" data-page="${route}"`)
+  html = html.replace(/href="\/([a-z0-9-]*\/)?"/g, (match, route: string | undefined) => {
+    const page = route?.replace(/\/$/, '') ?? 'home'
+    return page === 'home' || routes.includes(page) ? `href="${pathFor(page as Page, language)}"` : match
+  })
+  const languageSwitch = `<div class="language-switch" aria-label="${language === 'es' ? 'Idioma' : 'Langue'}"><a href="${pathFor(page, 'fr')}" lang="fr"${language === 'fr' ? ' aria-current="page"' : ''}>FR</a><span aria-hidden="true"> | </span><a href="${pathFor(page, 'es')}" lang="es"${language === 'es' ? ' aria-current="page"' : ''}>ES</a></div>`
+  if (import.meta.env.VITE_ENABLE_ES === 'true' && import.meta.env.VITE_SHOW_LANGUAGE_SWITCH === 'true') {
+    html = html.replace('<button class="mobile-menu-btn">', `${languageSwitch}<button class="mobile-menu-btn" aria-label="Menu">`)
+  }
+  return html
+}
+
+function updateMetadata(page: Page, language: Language) {
+  const [title, description] = seo[page][language]
+  const canonical = `https://heart-resonance.com${pathFor(page, language)}`
+  document.title = title
+  document.documentElement.lang = language
+  document.querySelector<HTMLMetaElement>('meta[name="description"]')?.setAttribute('content', description)
+  document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', canonical)
+  for (const [property, content] of [['og:title', title], ['og:description', description], ['og:url', canonical]]) {
+    document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`)?.setAttribute('content', content)
+  }
+  for (const alternate of document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]')) {
+    const alternateLanguage = alternate.hreflang === 'es' ? 'es' : 'fr'
+    alternate.href = `https://heart-resonance.com${pathFor(page, alternateLanguage)}`
+  }
+}
+
+export function getPageHtml(page: Page): string {
+  if (page === 'home') {
+    return homePageTemplate
+  } else if (page === 'maria') {
+    return mariaPageTemplate
+  } else if (page === 'seances') {
+    return seancesPageTemplate
+  } else if (page === 'voir-clair') {
+    return voirClairPageTemplate
+  } else if (page === 'memoires-akashiques') {
+    return memoiresAkashiquesPageTemplate
+  } else if (page === 'reiki') {
+    return reikiPageTemplate
+  } else if (page === 'reprogrammation') {
+    return reprogrammationPageTemplate
+  } else if (page === 'tarifs') {
+    return tarifsPageTemplate
+  } else if (page === 'reiki-usui') {
+    return reikiUsuiPageTemplate
+  } else if (page === 'memoires-akashiques-formations') {
+    return memoiresAkashiquesFormationsPageTemplate
+  } else if (page === 'canalisation') {
+    return canalisationPageTemplate
+  } else if (page === 'ateliers') {
+    return ateliersPageTemplate
+  } else if (page === 'atelier-1') {
+    return atelier1PageTemplate
+  } else if (page === 'atelier-2') {
+    return atelier2PageTemplate
+  } else if (page === 'livres') {
+    return livresPageTemplate
+  } else if (page === 'livre-1') {
+    return livre1PageTemplate
+  } else if (page === 'livre-2') {
+    return livre2PageTemplate
+  } else if (page === 'privacy') {
+    return privacyPageTemplate
+  } else if (page === 'cgv') {
+    return cgvPageTemplate
+  } else if (page === 'mentions') {
+    return mentionsPageTemplate
+  } else if (page === 'positionnement') {
+    return positionnementPageTemplate
+  } else if (page === 'reserver') {
+    return reserverPageTemplate
+  } else if (page === 'faq') {
+    return buildFaqAccordion()
+  } else if (page === 'agenda') {
+    return agendaPageTemplate
+  } else {
+    return podcastPageTemplate
+  }
+}
+
 function render(page: Page, updateHistory = true) {
+  if (!app) return
+  const language = languageFromPath()
   if (updateHistory) {
-    const path = page === 'home' ? '/' : `/${page}/`
+    const path = pathFor(page, language)
     if (window.location.pathname !== path) window.history.pushState(null, '', path)
   }
-  // reset animation
   app.classList.remove('page-fade')
-  // force reflow to restart animation each time
   void app.offsetWidth
-
-  if (page === 'home') {
-    app.innerHTML = homePageTemplate
-  } else if (page === 'maria') {
-    app.innerHTML = mariaPageTemplate
-  } else if (page === 'voir-clair') {
-    app.innerHTML = voirClairPageTemplate
-  } else if (page === 'memoires-akashiques') {
-    app.innerHTML = memoiresAkashiquesPageTemplate
-  } else if (page === 'reiki') {
-    app.innerHTML = reikiPageTemplate
-  } else if (page === 'reprogrammation') {
-    app.innerHTML = reprogrammationPageTemplate
-  } else if (page === 'tarifs') {
-    app.innerHTML = tarifsPageTemplate
-  } else if (page === 'reiki-usui') {
-    app.innerHTML = reikiUsuiPageTemplate
-  } else if (page === 'memoires-akashiques-formations') {
-    app.innerHTML = memoiresAkashiquesFormationsPageTemplate
-  } else if (page === 'canalisation') {
-    app.innerHTML = canalisationPageTemplate
-  } else if (page === 'ateliers') {
-    app.innerHTML = ateliersPageTemplate
-  } else if (page === 'atelier-1') {
-    app.innerHTML = atelier1PageTemplate
-  } else if (page === 'atelier-2') {
-    app.innerHTML = atelier2PageTemplate
-  } else if (page === 'livres') {
-    app.innerHTML = livresPageTemplate
-  } else if (page === 'livre-1') {
-    app.innerHTML = livre1PageTemplate
-  } else if (page === 'livre-2') {
-    app.innerHTML = livre2PageTemplate
-  } else if (page === 'privacy') {
-    app.innerHTML = privacyPageTemplate
-  } else if (page === 'cgv') {
-    app.innerHTML = cgvPageTemplate
-  } else if (page === 'mentions') {
-    app.innerHTML = mentionsPageTemplate
-  } else if (page === 'positionnement') {
-    app.innerHTML = positionnementPageTemplate
-  } else if (page === 'reserver') {
-    app.innerHTML = reserverPageTemplate
-  } else {
-    app.innerHTML = podcastPageTemplate
-  }
+  app.innerHTML = getLocalizedPageHtml(page, language)
+  updateMetadata(page, language)
 
   attachNavigation()
   window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
@@ -1712,10 +1957,18 @@ function render(page: Page, updateHistory = true) {
 }
 
 function attachNavigation() {
+  document.querySelectorAll<HTMLAnchorElement>('.language-switch a[lang]').forEach(link => {
+    link.addEventListener('click', () => {
+      try {
+        window.localStorage.setItem(languagePreferenceKey, JSON.stringify({ language: link.lang, expires: Date.now() + languagePreferenceDurationMs }))
+      } catch { /* Language link still works for this visit. */ }
+    })
+  })
+
   document.querySelectorAll<HTMLAnchorElement>('a[data-page]').forEach(link => {
     const page = link.dataset.page
     if (page === 'home' || routes.includes(page ?? '')) {
-      link.href = page === 'home' ? '/' : `/${page}/`
+      link.href = pathFor(page as Page, languageFromPath())
     }
   })
 
@@ -1725,22 +1978,10 @@ function attachNavigation() {
     render('home')
   })
 
-  const mariaItem = document.querySelector<HTMLElement>('.nav-item[data-page="maria"]')
-  mariaItem?.addEventListener('click', (event) => {
-    event.preventDefault()
-    render('maria')
-  })
-
   const backHomeButton = document.querySelector<HTMLElement>('.btn-back-home')
   backHomeButton?.addEventListener('click', (event) => {
     event.preventDefault()
     render('home')
-  })
-
-  const podcastItem = document.querySelector<HTMLElement>('.nav-item[data-page="podcast"]')
-  podcastItem?.addEventListener('click', (event) => {
-    event.preventDefault()
-    render('podcast')
   })
 
   // Add event listener for podcast button on homepage
@@ -1750,22 +1991,14 @@ function attachNavigation() {
     render('podcast')
   })
 
-  const tarifsItem = document.querySelector<HTMLElement>('.nav-item[data-page="tarifs"]')
-  tarifsItem?.addEventListener('click', (event) => {
-    event.preventDefault()
-    render('tarifs')
-  })
-
-  const positionnementItem = document.querySelector<HTMLElement>('.nav-item[data-page="positionnement"]')
-  positionnementItem?.addEventListener('click', (event) => {
-    event.preventDefault()
-    render('positionnement')
-  })
-
-  const bookingItem = document.querySelector<HTMLElement>('.nav-item[data-page="reserver"]')
-  bookingItem?.addEventListener('click', (event) => {
-    event.preventDefault()
-    render('reserver')
+  document.querySelectorAll<HTMLElement>('.nav-item:not(.dropdown)[data-page]').forEach(item => {
+    item.addEventListener('click', event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
+      event.preventDefault()
+      document.body.classList.remove('menu-open')
+      const page = item.dataset.page
+      if (page && routes.includes(page)) render(page as Page)
+    })
   })
 
   const brevoBookingButtons = document.querySelectorAll<HTMLButtonElement>('[data-brevo-meeting]')
@@ -1920,20 +2153,6 @@ function attachNavigation() {
     })
   })
   
-  // Also handle regular nav items clicks
-  const navItems = document.querySelectorAll<HTMLElement>('.nav-item:not(.dropdown)')
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      if (window.innerWidth <= 600) {
-        // Close mobile menu and remove body lock
-        mobileMenuBtn?.classList.remove('open')
-        navMenu?.classList.remove('mobile-open')
-        overlay?.classList.remove('show')
-        document.body.classList.remove('menu-open')
-      }
-    })
-  })
-  
   // Handle footer links
   const footerLinks = document.querySelectorAll<HTMLElement>('.footer-link[data-page]')
   footerLinks.forEach(link => {
@@ -1948,5 +2167,9 @@ function attachNavigation() {
   })
 }
 
-window.addEventListener('popstate', () => render(pageFromPath(), false))
-render(pageFromPath(), false)
+if (typeof window !== 'undefined') {
+  if (!applyAutomaticLanguage()) {
+    window.addEventListener('popstate', () => render(pageFromPath(), false))
+    render(pageFromPath(), false)
+  }
+}

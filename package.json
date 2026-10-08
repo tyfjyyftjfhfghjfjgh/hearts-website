@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && node scripts/build-routes.mjs",
+    "check:build": "node scripts/check-build.mjs",
+    "check:language": "node scripts/check-language.mjs",
+    "preview:es": "vite preview --outDir .spanish-preview",
     "preview": "vite preview"
   },
   "devDependencies": {

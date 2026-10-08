@@ -121,6 +121,7 @@ h1 {
   background: transparent;
   border: 1px solid transparent;
 }
+.nav-item:not(.dropdown) a { color: inherit; text-decoration: none; display: block; }
 
 .nav-item:not(.dropdown):hover {
   color: #c9a35a;
@@ -173,6 +174,14 @@ h1 {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
+}
+.banner-service-title {
+  color: #2c2c2c;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  line-height: 1.35;
+  margin: -0.7rem 0 1.5rem;
+  font-weight: 600;
 }
 .banner-text .subtitle {
   color: #4a4a4a;
@@ -312,7 +321,7 @@ h1 {
   color: #1a1a1a;
 }
 
-.maria-intro h2 {
+.maria-intro h1 {
   font-family: 'Playfair Display', serif;
   font-size: 1.4rem;
   margin: 0 0 1.5rem 0;
@@ -1318,6 +1327,122 @@ h1 {
   margin-bottom: 1rem;
 }
 
+.discover-button {
+  display: inline-block;
+  padding: 0.9rem 1.5rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #c9a35a 0%, #b8931f 100%);
+  box-shadow: 0 4px 12px rgba(184, 147, 31, 0.22);
+  color: #fff;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.discover-button:hover,
+.discover-button:focus-visible { box-shadow: 0 7px 18px rgba(184, 147, 31, 0.34); color: #fff; }
+
+.info-page { background: linear-gradient(180deg, #f7f3ea 0, #fff 260px); padding: 3.5rem 2rem 4rem; }
+.info-back, .info-hero, .info-list, .info-action { max-width: 900px; margin-left: auto; margin-right: auto; }
+.info-back { margin-bottom: 2rem; }
+.info-hero { text-align: center; margin-bottom: 2.5rem; }
+.info-hero h1 { color: #1a1a1a; font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); }
+.info-hero p, .info-list { color: #4a4a4a; font-size: 1.05rem; line-height: 1.8; }
+.info-list article { padding: 1.5rem 0; border-bottom: 1px solid #e6ddcb; }
+.info-list h2 { font-family: 'Playfair Display', serif; font-size: 1.45rem; color: #1a1a1a; }
+.info-list p { margin: 0 0 0.9rem; }
+.info-action { text-align: center; margin-top: 2.5rem; }
+
+/* FAQ */
+.faq-page { background: linear-gradient(180deg, #f3eee2 0, #fbfaf7 420px, #fff 100%); }
+.faq-hero {
+  max-width: 940px;
+  padding: 3.3rem 3rem;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #eee6d6;
+  border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(74, 58, 30, 0.07);
+}
+.faq-hero h1 { margin: 0.4rem 0 1.1rem; }
+.faq-hero > p:last-child { max-width: 670px; margin: 0 auto; }
+.faq-eyebrow {
+  color: #8b6b21 !important;
+  font-size: 0.78rem !important;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+.faq-list { max-width: 860px; margin: 0 auto; }
+.faq-group-title {
+  margin: 3rem 0 1rem;
+  color: #8b6b21;
+  font: 700 0.82rem 'Open Sans', Arial, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.faq-group-title:first-child { margin-top: 0; }
+.faq-item {
+  margin: 0 0 0.8rem;
+  background: #fff;
+  border: 1px solid #e9e2d4;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(74, 58, 30, 0.035);
+  overflow: hidden;
+}
+.faq-item[open] { border-color: #d8c69d; box-shadow: 0 10px 28px rgba(74, 58, 30, 0.08); }
+.faq-item summary {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) 2rem;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.25rem 1.4rem;
+  cursor: pointer;
+  list-style: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover, .faq-item[open] summary { background: #fdfbf7; }
+.faq-item summary:focus-visible { outline: 2px solid #b8931f; outline-offset: -4px; border-radius: 14px; }
+.faq-number { color: #ad9467; font: 700 1.15rem 'Playfair Display', serif; }
+.faq-question { color: #242922; font: 700 1.12rem/1.45 'Playfair Display', serif; }
+.faq-indicator { position: relative; width: 1.85rem; height: 1.85rem; border-radius: 50%; background: #f6f1e7; }
+.faq-indicator::before, .faq-indicator::after { content: ''; position: absolute; top: 50%; left: 50%; width: 0.7rem; height: 1.5px; background: #8b6b21; transform: translate(-50%, -50%); }
+.faq-indicator::after { transform: translate(-50%, -50%) rotate(90deg); transition: opacity 0.2s ease; }
+.faq-item[open] .faq-indicator::after { opacity: 0; }
+.faq-answer { padding: 0 4.55rem 1.45rem 5rem; color: #4a4a4a; font: 1rem/1.8 'Open Sans', Arial, sans-serif; }
+.faq-answer p { margin: 0 0 0.85rem; }
+.faq-answer p:last-child { margin-bottom: 0; }
+.faq-answer ul { margin: 0.5rem 0 1rem; padding-left: 1.35rem; }
+.faq-answer li { margin-bottom: 0.3rem; }
+.faq-answer a { color: #8b6b21; text-underline-offset: 0.18em; }
+.faq-page .info-action { max-width: 860px; padding: 2rem; box-sizing: border-box; background: #f5f1e8; border-radius: 18px; }
+.language-switch { display: flex; align-items: center; gap: 0.35rem; font: 600 0.9rem 'Open Sans', Arial, sans-serif; white-space: nowrap; }
+.language-switch a { color: #6a5d3a; text-decoration: none; }
+.language-switch a[aria-current="page"] { color: #1a1a1a; text-decoration: underline; text-underline-offset: 0.2em; }
+.language-switch a:focus-visible { outline: 2px solid #b8931f; outline-offset: 3px; }
+
+@media (max-width: 900px) {
+  .maria-body { flex-direction: column; gap: 2rem; }
+  .maria-content, .maria-aside { width: 100%; flex: none; box-sizing: border-box; }
+  .maria-hero { flex-direction: column; }
+  .maria-image-wrapper { flex: none; width: min(100%, 320px); }
+}
+
+@media (max-width: 600px) {
+  .maria-page, .info-page { padding: 2rem 1rem 3rem; }
+  .maria-hero { padding: 1.5rem; }
+  .info-list article { padding: 1.2rem 0; }
+  .faq-hero { padding: 2.2rem 1.3rem; border-radius: 18px; }
+  .faq-group-title { margin-top: 2.2rem; }
+  .faq-item summary { grid-template-columns: 1.7rem minmax(0, 1fr) 1.75rem; gap: 0.65rem; padding: 1rem; }
+  .faq-question { font-size: 1rem; }
+  .faq-number { font-size: 0.95rem; }
+  .faq-answer { padding: 0 1rem 1.2rem; font-size: 0.95rem; }
+  .faq-page .info-action { padding: 1.5rem 1rem; }
+  .language-switch { margin-left: auto; margin-right: 0.8rem; }
+}
+
 .home-divider {
   text-align: center;
   color: #c9a35a;
@@ -1377,7 +1502,7 @@ h1 {
 }
 
 .btn-rdv {
-  background: #7a815c;
+  background: linear-gradient(135deg, #c9a35a 0%, #b8931f 100%);
   color: white;
   border: none;
   border-radius: 7px;
@@ -1389,7 +1514,7 @@ h1 {
   transition: background 0.2s;
 }
 .btn-rdv:hover {
-  background: #5f6d45;
+  background: linear-gradient(135deg, #b8931f 0%, #a57d19 100%);
 }
 
 @media (max-width: 900px) {
