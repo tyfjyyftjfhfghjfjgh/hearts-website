@@ -124,8 +124,8 @@ const homePageTemplate = `
     <div class="banner-overlay"></div>
     <div class="banner-text">
       <h1>HEART RESONANCE</h1>
-      <p class="subtitle">Coach spirituelle et praticienne en clairvoyance consciente et lectures des annales akashiques.<br />
-        Vous avez regardé votre situation sous tous les angles. Sauf peut-être celui qui se trouve dans votre angle mort.<br />
+      <h2 class="banner-service-title">Coach spirituelle et praticienne en clairvoyance consciente et lectures des annales akashiques.</h2>
+      <p class="subtitle">Vous avez regardé votre situation sous tous les angles. Sauf peut-être celui qui se trouve dans votre angle mort.<br />
         À travers la clairvoyance consciente et les lectures akashiques, je vous propose un autre angle de lecture pour comprendre ce qui se joue aujourd'hui.<br />
         L'objectif : repartir avec davantage de lucidité et rester libre de vos choix.</p>
       <p class="quote">
@@ -296,8 +296,8 @@ const seancesPageTemplate = `
       <p>Choisissez l'accompagnement qui correspond à votre situation.</p>
     </section>
     <section class="booking-grid" aria-label="Découvrir les séances">
-      <article class="booking-card"><h2>Voir clair en soi</h2><p class="booking-description">Un autre angle de lecture sur la situation que vous traversez.</p><a class="booking-button" href="/voir-clair/">Découvrir la séance</a></article>
-      <article class="booking-card"><h2>Lecture des annales akashiques</h2><p class="booking-description">Explorer vos questions à travers une pratique de guidance spirituelle.</p><a class="booking-button" href="/memoires-akashiques/">Découvrir la lecture</a></article>
+      <article class="booking-card"><span class="booking-format">En visioconférence</span><h2>Voir clair en soi</h2><p class="booking-description">Un autre angle de lecture sur la situation que vous traversez.</p><a class="booking-button" href="/voir-clair/">Découvrir la séance</a></article>
+      <article class="booking-card"><span class="booking-format">En visioconférence</span><h2>Lecture des annales akashiques</h2><p class="booking-description">Explorer vos questions à travers une pratique de guidance spirituelle.</p><a class="booking-button" href="/memoires-akashiques/">Découvrir la lecture</a></article>
       <article class="booking-card"><h2>Séance de Reiki</h2><p class="booking-description">Une séance énergétique dans un cadre attentif et respectueux.</p><a class="booking-button" href="/reiki/">Découvrir la séance</a></article>
       <article class="booking-card"><h2>Reprogrammation des mémoires cellulaires</h2><p class="booking-description">Un travail énergétique et conscient sur les empreintes du corps.</p><a class="booking-button" href="/reprogrammation/">Découvrir la séance</a></article>
     </section>
@@ -343,7 +343,8 @@ const voirClairPageTemplate = `
     </div>
 
     <section class="seances-hero">
-      <h1>VOIR CLAIR EN SOI — ACCOMPAGNEMENT SPIRITUEL</h1>
+      <p class="booking-eyebrow">En visioconférence</p>
+      <h1>VOIR CLAIR EN SOI</h1>
       <p class="seances-intro">
         Vous savez que quelque chose coince. Mais vous n'arrivez pas à voir où.<br />
         Vous avez peut-être déjà analysé votre situation sous tous les angles. Pourtant, quelque chose vous échappe.<br />
@@ -403,6 +404,7 @@ const memoiresAkashiquesPageTemplate = `
     </div>
 
     <section class="seances-hero">
+      <p class="booking-eyebrow">En visioconférence</p>
       <h1>LECTURE DES ANNALES AKASHIQUES</h1>
       <p class="seances-intro">
         Vous avez des questions sur une relation, un choix, votre travail, l'argent, un projet ou une situation qui se répète ?<br />
