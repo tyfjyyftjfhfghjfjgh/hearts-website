@@ -40,7 +40,7 @@ try {
     const html = shell
       .replace('<html lang="fr">', `<html lang="${language}">`)
       .replace('<title>Heart Resonance Maria</title>', `<title>${escapeHtml(title)}</title>${metadata}`)
-      .replace('<div id="app"></div>', `<div id="app">${getLocalizedPageHtml(route, language)}</div>`)
+      .replace('<div id="app"></div>', `<div id="app" data-page="${route}" data-language="${language}">${getLocalizedPageHtml(route, language)}</div>`)
     await writeFile(new URL('index.html', path), html.replace(/[ \t]+$/gm, ''))
   }
 } finally {

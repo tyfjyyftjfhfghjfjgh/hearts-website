@@ -3,6 +3,8 @@ import routes from './routes.json'
 import seo from './seo.json'
 import esTranslations from './es-translations.json'
 import esOverrides from './es-overrides.json'
+import { getAudioPageHtml, attachAudioPlayer } from './audio-page'
+import { attachPayhipProduct } from './payhip-product'
 
 const app = typeof document === 'undefined' ? null : document.querySelector<HTMLDivElement>('#app')
 
@@ -17,7 +19,7 @@ declare global {
 const headerTemplate = `
   <header class="header">
     <div class="logo-container" data-page="home">
-      <img src="/1-removebg-preview.png" alt="Heart Resonance Logo" class="logo-image" style="height: 8rem;" />
+      <img src="/logo-heart-resonance.webp" alt="Heart Resonance Logo" class="logo-image" width="540" height="388" decoding="async" style="height: 8rem;" />
     </div>
     <button class="mobile-menu-btn">
       <span></span>
@@ -49,6 +51,7 @@ const headerTemplate = `
         <li class="nav-item" data-page="faq"><a href="/faq/">FAQ</a></li>
         <li class="nav-item" data-page="agenda"><a href="/agenda/">Agenda</a></li>
         <li class="nav-item" data-page="podcast"><a href="/podcast/">Podcast</a></li>
+        <li class="nav-item" data-page="asseoir-son-identite"><a href="/asseoir-son-identite/">L’audio</a></li>
         <li class="nav-item nav-booking" data-page="reserver"><a href="/reserver/">Réserver une séance</a></li>
       </ul>
     </nav>
@@ -68,6 +71,8 @@ const footerTemplate = `
         <a href="/ateliers/" class="footer-link">Ateliers</a>
         <span class="footer-separator">/</span>
         <a href="/livres/" class="footer-link">Livres</a>
+        <span class="footer-separator">/</span>
+        <a href="/asseoir-son-identite/" class="footer-link">L’audio</a>
         <span class="footer-separator">/</span>
         <a href="#" data-page="cgv" class="footer-link">CGV</a>
         <span class="footer-separator">/</span>
@@ -184,7 +189,7 @@ const mariaPageTemplate = `
 
     <section class="maria-hero">
       <div class="maria-image-wrapper">
-        <img src="/HUIZAR-Maria.png" alt="Maria HUIZAR" class="maria-image" />
+        <img src="/maria-huizar.webp" alt="Maria HUIZAR" class="maria-image" width="800" height="800" decoding="async" />
       </div>
       <div class="maria-intro">
         <h1>Maria HUIZAR</h1>
@@ -1465,15 +1470,56 @@ const positionnementPageTemplate = `
   ${footerTemplate}
 `
 
-function openBrevoMeeting(meeting: keyof typeof brevoMeetingUrls) {
-  if (!window.BrevoBookingPage) {
-    window.alert(languageFromPath() === 'es'
-      ? 'El módulo de reservas se está cargando. Vuelve a intentarlo en un momento.'
-      : 'Le module de réservation est en cours de chargement. Veuillez réessayer dans un instant.')
-    return
-  }
+let brevoWidgetPromise: Promise<void> | undefined
 
-  window.BrevoBookingPage.initStaticButton({ url: brevoMeetingUrls[meeting] })
+function prepareBrevoBooking(): Promise<void> {
+  if (window.BrevoBookingPage) return Promise.resolve()
+  if (brevoWidgetPromise) return brevoWidgetPromise
+  brevoWidgetPromise = new Promise<void>((resolve, reject) => {
+    let settled = false
+    const stylesheet = document.createElement('link')
+    stylesheet.rel = 'stylesheet'
+    stylesheet.href = 'https://meetings.brevo.com/assets/styles/popup.css'
+    const script = document.createElement('script')
+    script.src = 'https://meetings.brevo.com/assets/libs/popup.min.js'
+    script.async = true
+    const timeout = window.setTimeout(failed, 15000)
+    function failed() {
+      if (settled) return
+      settled = true
+      window.clearTimeout(timeout)
+      script.remove()
+      stylesheet.remove()
+      brevoWidgetPromise = undefined
+      reject(new Error('Booking widget unavailable'))
+    }
+    let resourcesLoaded = 0
+    const loaded = () => {
+      if (settled) return
+      resourcesLoaded += 1
+      if (resourcesLoaded !== 2) return
+      window.clearTimeout(timeout)
+      if (window.BrevoBookingPage) {
+        settled = true
+        resolve()
+      } else failed()
+    }
+    script.onload = loaded
+    stylesheet.onload = loaded
+    script.onerror = failed
+    stylesheet.onerror = failed
+    document.head.append(stylesheet, script)
+  })
+  return brevoWidgetPromise
+}
+
+async function openBrevoMeeting(meeting: keyof typeof brevoMeetingUrls) {
+  try {
+    await prepareBrevoBooking()
+    window.BrevoBookingPage!.initStaticButton({ url: brevoMeetingUrls[meeting] })
+  } catch {
+    window.location.assign(brevoMeetingUrls[meeting])
+  }
 }
 
 const cgvPageTemplate = `
@@ -1744,7 +1790,7 @@ const privacyPageTemplate = `
   ${footerTemplate}
 `
 
-export type Page = 'home' | 'maria' | 'seances' | 'voir-clair' | 'memoires-akashiques' | 'reiki' | 'reprogrammation' | 'tarifs' | 'reiki-usui' | 'memoires-akashiques-formations' | 'canalisation' | 'ateliers' | 'atelier-1' | 'atelier-2' | 'livres' | 'livre-1' | 'livre-2' | 'podcast' | 'reserver' | 'cgv' | 'privacy' | 'mentions' | 'positionnement' | 'faq' | 'agenda'
+export type Page = 'home' | 'maria' | 'seances' | 'voir-clair' | 'memoires-akashiques' | 'reiki' | 'reprogrammation' | 'tarifs' | 'reiki-usui' | 'memoires-akashiques-formations' | 'canalisation' | 'ateliers' | 'atelier-1' | 'atelier-2' | 'livres' | 'livre-1' | 'livre-2' | 'podcast' | 'reserver' | 'cgv' | 'privacy' | 'mentions' | 'positionnement' | 'faq' | 'agenda' | 'asseoir-son-identite'
 
 function buildFaqAccordion(): string {
   let itemNumber = 0
@@ -1828,14 +1874,14 @@ function applyAutomaticLanguage(): boolean {
 
 const normalizeText = (text: string) => text.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&#39;', "'").replaceAll('&nbsp;', ' ').replace(/\s+/g, ' ').trim()
 const escapeText = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
-const spanishText: Record<string, string> = Object.fromEntries(
+const spanishText: Record<string, string> = import.meta.env.SSR || import.meta.env.VITE_ENABLE_ES === 'true' ? Object.fromEntries(
   Object.entries({ ...esTranslations, ...esOverrides }).map(([source, draft]) => [source, draft
     .replace(/Resonancia del Corazón|resonancia cardíaca/gi, 'Heart Resonance')
     .replace(/\bEntrenamiento\b/g, 'Formación')
     .replace(/\bentrenamiento\b/g, 'formación')
     .replace(/\benérgica\b/g, 'energética')
   ]),
-)
+) : {}
 
 export function getLocalizedPageHtml(page: Page, language: Language): string {
   let html = getPageHtml(page)
@@ -1886,7 +1932,9 @@ function updateMetadata(page: Page, language: Language) {
 }
 
 export function getPageHtml(page: Page): string {
-  if (page === 'home') {
+  if (page === 'asseoir-son-identite') {
+    return `${headerTemplate}${getAudioPageHtml()}${footerTemplate}`
+  } else if (page === 'home') {
     return homePageTemplate
   } else if (page === 'maria') {
     return mariaPageTemplate
@@ -1946,19 +1994,17 @@ function render(page: Page, updateHistory = true) {
     const path = pathFor(page, language)
     if (window.location.pathname !== path) window.history.pushState(null, '', path)
   }
-  app.classList.remove('page-fade')
-  void app.offsetWidth
   app.innerHTML = getLocalizedPageHtml(page, language)
   updateMetadata(page, language)
 
   attachNavigation()
   window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
 
-  // run fade-in animation
-  app.classList.add('page-fade')
 }
 
 function attachNavigation() {
+  attachPayhipProduct()
+  attachAudioPlayer()
   document.querySelectorAll<HTMLAnchorElement>('.language-switch a[lang]').forEach(link => {
     link.addEventListener('click', () => {
       try {
@@ -2004,11 +2050,12 @@ function attachNavigation() {
   })
 
   const brevoBookingButtons = document.querySelectorAll<HTMLButtonElement>('[data-brevo-meeting]')
+  if (brevoBookingButtons.length) void prepareBrevoBooking().catch(() => { /* A click can retry or open the booking page directly. */ })
   brevoBookingButtons.forEach(button => {
     button.addEventListener('click', () => {
       const meeting = button.dataset.brevoMeeting
-      if (meeting === 'voir-clair' || meeting === 'voirClair') openBrevoMeeting('voirClair')
-      if (meeting === 'akashiques') openBrevoMeeting('akashiques')
+      if (meeting === 'voir-clair' || meeting === 'voirClair') void openBrevoMeeting('voirClair')
+      if (meeting === 'akashiques') void openBrevoMeeting('akashiques')
     })
   })
 
@@ -2016,26 +2063,6 @@ function attachNavigation() {
   const mobileMenuBtn = document.querySelector<HTMLElement>('.mobile-menu-btn')
   const navMenu = document.querySelector<HTMLElement>('.nav-menu')
   const overlay = document.querySelector<HTMLElement>('.mobile-menu-overlay')
-  
-  // Function to get scrollbar width
-  function getScrollbarWidth(): number {
-    const outer = document.createElement('div')
-    outer.style.visibility = 'hidden'
-    outer.style.overflow = 'scroll'
-    document.body.appendChild(outer)
-    
-    const inner = document.createElement('div')
-    outer.appendChild(inner)
-    
-    const scrollbarWidth = outer.offsetWidth - inner.offsetWidth
-    outer.parentNode?.removeChild(outer)
-    
-    return scrollbarWidth
-  }
-  
-  // Store scrollbar width
-  const scrollbarWidth = getScrollbarWidth()
-  document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`)
   
   if (mobileMenuBtn && navMenu && overlay) {
     mobileMenuBtn.addEventListener('click', () => {
@@ -2047,6 +2074,7 @@ function attachNavigation() {
         overlay.classList.remove('show')
         document.body.classList.remove('menu-open')
       } else {
+        document.body.style.setProperty('--scrollbar-width', `${window.innerWidth - document.documentElement.clientWidth}px`)
         mobileMenuBtn.classList.add('open')
         navMenu.classList.add('mobile-open')
         overlay.classList.add('show')
@@ -2172,6 +2200,13 @@ function attachNavigation() {
 if (typeof window !== 'undefined') {
   if (!applyAutomaticLanguage()) {
     window.addEventListener('popstate', () => render(pageFromPath(), false))
-    render(pageFromPath(), false)
+    const page = pageFromPath()
+    if (app?.dataset.page === page && app.dataset.language === languageFromPath()) {
+      // Keep the generated HTML, images and embedded players already on screen.
+      updateMetadata(page, languageFromPath())
+      attachNavigation()
+    } else {
+      render(page, false)
+    }
   }
 }
