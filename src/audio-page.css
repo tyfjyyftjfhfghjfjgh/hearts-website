@@ -145,6 +145,18 @@
 .payhip-product-open { overflow: hidden; }
 .audio-product-overlay { position: fixed; inset: 0; z-index: 2147483000; display: flex; align-items: center; justify-content: center; background: #0009; }
 .audio-product-overlay[hidden] { display: none !important; }
+@media (prefers-reduced-motion: no-preference) {
+  .audio-product-overlay:not([hidden]) { animation: audio-overlay-appear 240ms ease-out; }
+  .audio-product-overlay:not([hidden]) .audio-product-dialog { animation: audio-dialog-enter 240ms cubic-bezier(.2, .75, .25, 1); }
+}
+@keyframes audio-overlay-appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes audio-dialog-enter {
+  from { transform: translateY(12px); }
+  to { transform: translateY(0); }
+}
 .audio-product-dialog { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; width: min(540px, calc(100% - 2rem)); max-height: 92vh; max-height: 92dvh; padding: 0; border: 1px solid #e6ddcb; border-radius: 16px; background: #fff; color: #4a4a4a; box-shadow: 0 20px 70px #0003; overflow: hidden; }
 .audio-product-dialog:has(.audio-checkout:not([hidden])) { width: min(1080px, calc(100% - 1rem)); height: min(900px, 92vh); height: min(900px, 92dvh); }
 .audio-product-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 1.5rem; border-bottom: 1px solid #e6ddcb; }
