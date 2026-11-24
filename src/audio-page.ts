@@ -3,7 +3,7 @@ import './audio-page.css'
 
 const productMatch = /^https:\/\/(?:www\.)?payhip\.com\/b\/([a-zA-Z0-9]+)\/?$/.exec(config.checkoutUrl)
 const checkoutUrl = productMatch ? config.checkoutUrl : ''
-const productId = productMatch?.[1] ?? ''
+const paymentUrl = productMatch ? `https://payhip.com/buy?link=${productMatch[1]}` : ''
 const escapeAttribute = (value: string) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;')
 const arrow = '<span aria-hidden="true">↗</span>'
 const portrait = (file: string, className: string) => `<div class="audio-portrait ${className}"><img src="/audio/asseoir-son-identite/${file}" alt="Maria Huizar, souriante dans un jardin lumineux, en chemise rouge et jean" width="591" height="1280" decoding="async" ${className === 'audio-hero-portrait' ? 'fetchpriority="high"' : 'loading="lazy"'} /></div>`
@@ -70,9 +70,19 @@ export function getAudioPageHtml(): string {
       <aside class="audio-notice audio-wrap"><p>Ne l’écoute pas en conduisant ou pendant une activité qui demande ton attention. Cet audio est un accompagnement spirituel. Il ne remplace pas un suivi médical ou psychologique.</p></aside>
       <p class="audio-copyright audio-wrap">© 2026 Heart Resonance Maria · Tous droits réservés.<br>Audio réservé à un usage personnel. Toute reproduction, diffusion ou revente, même partielle, est interdite.</p>
       ${checkoutUrl ? `<div class="audio-product-overlay" id="payhip-product-overlay" hidden><section id="payhip-product-dialog" class="audio-product-dialog" role="dialog" aria-modal="true" aria-labelledby="payhip-product-title" tabindex="-1">
-        <div class="audio-product-header"><div><p>FICHE PRODUIT · PAYHIP</p><h2 id="payhip-product-title">Asseoir son identité</h2></div><button type="button" data-product-close autofocus>Fermer <span aria-hidden="true">×</span></button></div>
-        <div class="audio-product-body"><p data-product-status role="status">Chargement de la fiche produit…</p><div class="payhip-embed-page" data-key="${productId}"></div></div>
-        <div class="audio-product-footer"><a href="${escapeAttribute(checkoutUrl)}" target="_blank" rel="noopener noreferrer">La fiche ne s’affiche pas ? Ouvrir sur Payhip ↗</a></div>
+        <div class="audio-product-header"><div><p>AUDIO CANALISÉ · PORTE 01</p><h2 id="payhip-product-title">Asseoir son identité</h2></div><button type="button" data-product-close>Fermer <span aria-hidden="true">×</span></button></div>
+        <div class="audio-product-body">
+          <div class="audio-product-summary" data-product-summary>
+            <img src="/audio/asseoir-son-identite/bande-annonce-horizontal.webp" alt="" width="1920" height="1080" loading="lazy">
+            <p>Un audio de Maria Huizar pour retrouver tes repères pendant ou après une épreuve.</p>
+            <p class="audio-offer-format">14 minutes · MP3 à télécharger et à garder</p>
+            <button type="button" class="discover-button audio-button" data-checkout-start>Passer au paiement — 19 €</button>
+          </div>
+          <p data-checkout-loading role="status" hidden>Ouverture du paiement sécurisé…</p>
+          <p data-checkout-error role="status" hidden>Le formulaire Payhip ne répond pas. Tu peux réessayer ou ouvrir le paiement sur Payhip.</p>
+          <div class="audio-checkout" data-checkout-container hidden></div>
+        </div>
+        <div class="audio-product-footer" hidden><a href="${escapeAttribute(paymentUrl)}" target="_blank" rel="noopener noreferrer">Ouvrir le paiement sur Payhip ↗</a></div>
       </section></div>` : ''}
     </main>`
 }

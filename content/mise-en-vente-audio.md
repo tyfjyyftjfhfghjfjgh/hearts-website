@@ -4,13 +4,9 @@ Page : `/asseoir-son-identite/`.
 
 La page propose deux boutons **Acheter l’audio — 19 €**, au milieu et en bas, reliés au produit [dOrxa sur Payhip](https://payhip.com/b/dOrxa).
 
-Les deux boutons ouvrent une fenêtre superposée avec la **fiche produit Payhip**, avant le paiement. La fenêtre utilise l’intégration officielle de page : `payhip-embed-page`, `data-key="dOrxa"` et `https://payhip.com/embed-page.js`. Le script est chargé au premier clic uniquement. La navigation interne et le retour par l’historique sont pris en charge.
+Les deux boutons ouvrent la fiche de l’audio dans une fenêtre du site. Le titre, la présentation, le format et le prix sont disponibles dès le premier clic.
 
-La fenêtre se ferme avec le bouton « Fermer », la touche Échap ou un clic sur le fond. Un lien permet d’ouvrir Payhip dans un autre onglet si la fiche ne s’affiche pas, en conservant le site ouvert.
-
-Les deux commandes d’achat sont de vrais boutons, sans `href` ni `target`. Leur clic est géré au niveau du document pour fonctionner après un remplacement du contenu. La fenêtre ne dépend pas de `showModal`. Seul le lien explicite « Ouvrir sur Payhip » permet d’ouvrir un autre onglet.
-
-Les contrôles techniques vérifient les deux emplacements, le lien du produit, la fenêtre et son chargement à la demande. L’affichage réel de la fiche, le parcours d’achat et le fonctionnement sur téléphone doivent être vérifiés dans un navigateur avant publication. Payhip bloque actuellement les lectures automatiques depuis cet environnement.
+« Passer au paiement — 19 € » charge le [formulaire de commande Payhip](https://payhip.com/buy?link=dOrxa) dans cette même fenêtre. La fiche reste visible jusqu’à ce que Payhip signale que le formulaire est prêt. Si le formulaire ne répond pas, la personne peut réessayer ou suivre le lien explicite « Ouvrir le paiement sur Payhip ».
 
 ## Parcours conseillé
 
